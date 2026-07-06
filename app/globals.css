@@ -1,26 +1,459 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Design tokens — premium dark theme (default) + light theme
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* base surfaces */
+  --bg: #050505;
+  --bg-elevated: #0e0e0e;
+  --bg-card: #0a0a0c;
+
+  /* text */
+  --fg: #ededf0;
+  --fg-muted: #a1a1aa;
+  --fg-subtle: #71717a;
+
+  /* accents */
+  --accent-blue: #3b82f6;
+  --accent-electric: #2f6bff;
+  --accent-purple: #8b5cf6;
+  --accent-violet: #a855f7;
+  --accent-cyan: #22d3ee;
+  --accent-white: #f8fafc;
+
+  /* borders + semantic surfaces (white-based for dark) */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --surface-1: rgba(255, 255, 255, 0.02);
+  --surface-2: rgba(255, 255, 255, 0.04);
+  --surface-3: rgba(255, 255, 255, 0.06);
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
+  --overlay: rgba(255, 255, 255, 0.1);
+  --grid-line: rgba(255, 255, 255, 0.035);
+
+  /* inverted (solid button) — white in dark, near-black in light.
+     text-bg already maps to --bg, which is the correct on-invert color. */
+  --inverted-bg: #ffffff;
+
+  /* glows */
+  --glow-blue: rgba(59, 130, 246, 0.45);
+  --glow-purple: rgba(139, 92, 246, 0.45);
+  --glow-cyan: rgba(34, 211, 238, 0.4);
+
+  /* aurora (soft background wash) */
+  --aurora-purple: rgba(139, 92, 246, 0.18);
+  --aurora-cyan: rgba(34, 211, 238, 0.14);
+  --aurora-blue: rgba(47, 107, 255, 0.16);
+
+  /* vignette overlay */
+  --vignette: rgba(0, 0, 0, 0.6);
+
+  /* glass */
+  --glass-bg: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.015) 100%
+  );
+  --glass-strong-bg: linear-gradient(
+    180deg,
+    rgba(20, 20, 26, 0.72) 0%,
+    rgba(10, 10, 12, 0.6) 100%
+  );
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ring: rgba(139, 92, 246, 0.5);
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #fafafa;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+
+  --fg: #0a0a0a;
+  --fg-muted: #525252;
+  --fg-subtle: #737373;
+
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --surface-1: rgba(0, 0, 0, 0.025);
+  --surface-2: rgba(0, 0, 0, 0.04);
+  --surface-3: rgba(0, 0, 0, 0.06);
+  --hairline: rgba(0, 0, 0, 0.1);
+  --hairline-strong: rgba(0, 0, 0, 0.16);
+  --overlay: rgba(0, 0, 0, 0.06);
+  --grid-line: rgba(0, 0, 0, 0.045);
+
+  --inverted-bg: #0a0a0a;
+
+  --glow-blue: rgba(59, 130, 246, 0.3);
+  --glow-purple: rgba(139, 92, 246, 0.3);
+  --glow-cyan: rgba(34, 211, 238, 0.28);
+
+  --aurora-purple: rgba(139, 92, 246, 0.1);
+  --aurora-cyan: rgba(34, 211, 238, 0.08);
+  --aurora-blue: rgba(47, 107, 255, 0.1);
+
+  --vignette: rgba(0, 0, 0, 0.05);
+
+  --glass-bg: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  --glass-strong-bg: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(246, 246, 248, 0.72) 100%
+  );
+  --glass-border: rgba(0, 0, 0, 0.1);
+
+  --ring: rgba(139, 92, 246, 0.45);
+
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-card: var(--bg-card);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-electric: var(--accent-electric);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-border: var(--border);
+
+  /* semantic surface tokens for theme-aware utilities */
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-overlay: var(--overlay);
+  --color-invert: var(--inverted-bg);
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+   Base
+   ============================================================ */
+* {
+  border-color: var(--border);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  cursor: auto;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.32);
+  color: #fff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   Gradients & text effects
+   ============================================================ */
+.gradient-text {
+  background-image: linear-gradient(
+    120deg,
+    var(--accent-cyan) 0%,
+    var(--accent-blue) 38%,
+    var(--accent-violet) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gradient-text-soft {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.55) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="light"] .gradient-text-soft {
+  background-image: linear-gradient(
+    180deg,
+    #0a0a0a 0%,
+    rgba(10, 10, 10, 0.6) 100%
+  );
+}
+
+.gradient-mesh {
+  background-image:
+    radial-gradient(at 18% 12%, var(--glow-purple) 0px, transparent 50%),
+    radial-gradient(at 82% 8%, var(--glow-cyan) 0px, transparent 45%),
+    radial-gradient(at 50% 90%, var(--glow-blue) 0px, transparent 55%);
+}
+
+/* ============================================================
+   Glass + borders
+   ============================================================ */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-strong {
+  background: var(--glass-strong-bg);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--glass-border);
+}
+
+.hairline {
+  border: 1px solid var(--hairline);
+}
+
+.ring-glow {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 40px -8px var(--glow-purple),
+    0 0 80px -20px var(--glow-blue);
+}
+
+.glow-blue {
+  box-shadow: 0 0 60px -12px var(--glow-blue);
+}
+.glow-purple {
+  box-shadow: 0 0 60px -12px var(--glow-purple);
+}
+.glow-cyan {
+  box-shadow: 0 0 60px -12px var(--glow-cyan);
+}
+
+/* ============================================================
+   Backgrounds: grid, noise, aurora
+   ============================================================ */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%);
+}
+
+/* Always-light grid lines — for use inside dark cinematic panels */
+.grid-bg-dark {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%);
+}
+
+.noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
+
+.aurora {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 10%, var(--aurora-purple), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 85% 15%, var(--aurora-cyan), transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% 100%, var(--aurora-blue), transparent 65%);
+}
+
+/* ============================================================
+   Animations / utilities
+   ============================================================ */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-22px) translateX(10px); }
+}
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(18px) translateX(-12px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(2000%); opacity: 0; }
+}
+
+.animate-float-slow { animation: float-slow 14s ease-in-out infinite; }
+.animate-float-medium { animation: float-medium 10s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 24s linear infinite; }
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+.shimmer {
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.4s ease-in-out infinite;
+}
+
+/* Animated gradient border wrapper */
+.gradient-border {
+  position: relative;
+  border-radius: inherit;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    130deg,
+    rgba(34, 211, 238, 0.55),
+    rgba(139, 92, 246, 0.35) 45%,
+    rgba(255, 255, 255, 0.05) 80%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Conic glow ring used for avatar / orb */
+.conic-ring {
+  background: conic-gradient(
+    from 0deg,
+    var(--accent-cyan),
+    var(--accent-blue),
+    var(--accent-violet),
+    var(--accent-cyan)
+  );
+}
+
+/* ============================================================
+   Buttons — light-mode chrome
+   Ghost/outline pills use faint translucent surfaces that read as
+   near-invisible on a light background. Give them solid, clearly
+   delineated chrome in light mode. Dark-mode glass look is preserved.
+   ============================================================ */
+[data-theme="light"] [data-variant="ghost"] {
+  background-color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.12);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+[data-theme="light"] [data-variant="ghost"]:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] [data-variant="outline"] {
+  border-color: rgba(0, 0, 0, 0.22);
+}
+[data-theme="light"] [data-variant="outline"]:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================================
+   Focus / accessibility
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Hide native cursor on interactive elements when custom cursor active */
+@media (pointer: fine) {
+  a, button, [role="button"], input, textarea, select {
+    cursor: none;
+  }
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
