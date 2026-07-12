@@ -174,7 +174,7 @@ body {
 }
 
 @media (pointer: fine) {
-  body {
+  .custom-cursor-active body {
     cursor: none;
   }
 }
@@ -441,7 +441,12 @@ body {
 
 /* Hide native cursor on interactive elements when custom cursor active */
 @media (pointer: fine) {
-  a, button, [role="button"], input, textarea, select {
+  .custom-cursor-active a,
+  .custom-cursor-active button,
+  .custom-cursor-active [role="button"],
+  .custom-cursor-active input,
+  .custom-cursor-active textarea,
+  .custom-cursor-active select {
     cursor: none;
   }
 }

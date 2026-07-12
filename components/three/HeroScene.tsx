@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, Icosahedron } from "@react-three/drei";
 import * as THREE from "three";
 import { useTheme } from "@/components/providers/ThemeProvider";
+import { useRenderActive } from "@/components/three/useRenderActive";
 
 /* ----------------------------------------------------------------
    Particle field — drifting additive points
@@ -244,6 +245,7 @@ function CameraRig() {
    ---------------------------------------------------------------- */
 export default function HeroScene() {
   const { theme } = useTheme();
+  const { ref, active } = useRenderActive<HTMLDivElement>();
 
   // Scene background tracks the active theme so the canvas matches the
   // surrounding `bg-bg` section and the top/bottom fade gradients. Matches
@@ -251,10 +253,14 @@ export default function HeroScene() {
   const bg = theme === "light" ? "#fafafa" : "#050505";
 
   return (
+    <div ref={ref} className="absolute inset-0">
     <Canvas
       className="!absolute inset-0"
-      gl={{ powerPreference: "high-performance", antialias: true, alpha: false }}
-      dpr={[1, 1.8]}
+      // Pause the render loop while the canvas is off-screen or the tab is
+      // in the background — visually seamless, big main-thread saving.
+      frameloop={active ? "always" : "never"}
+      gl={{ powerPreference: "high-performance", antialias: false, alpha: false }}
+      dpr={[1, 1.5]}
       camera={{ position: [0, 0.2, 7], fov: 50 }}
     >
       {/* Scene background + fog follow the theme so the canvas never stays
@@ -277,5 +283,6 @@ export default function HeroScene() {
 
       <CameraRig />
     </Canvas>
+    </div>
   );
 }

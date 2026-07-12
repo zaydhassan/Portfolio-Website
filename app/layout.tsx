@@ -98,7 +98,7 @@ const jsonLd = {
   email: `mailto:${SITE.email}`,
   sameAs: [
     "https://github.com/zaydhassan",
-    "https://www.linkedin.com/in/zaydhassan",
+    "https://www.linkedin.com/in/zayd-hassan-a06105213",
   ],
   knowsAbout: [
     "Artificial Intelligence",

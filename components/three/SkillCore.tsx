@@ -4,6 +4,7 @@ import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { MeshDistortMaterial, Icosahedron } from "@react-three/drei";
 import * as THREE from "three";
+import { useRenderActive } from "@/components/three/useRenderActive";
 
 const ACCENT_HEX: Record<string, string> = {
   cyan: "#22d3ee",
@@ -154,10 +155,14 @@ function Parallax({ children }: { children: React.ReactNode }) {
 
 export default function SkillCore({ accent }: { accent: "cyan" | "purple" | "blue" }) {
   const color = ACCENT_HEX[accent];
+  const { ref, active } = useRenderActive<HTMLDivElement>();
   return (
+    <div ref={ref} className="absolute inset-0">
     <Canvas
       className="!absolute inset-0"
-      gl={{ powerPreference: "high-performance", antialias: true, alpha: false }}
+      // Pause the render loop while off-screen / tab hidden — seamless visually.
+      frameloop={active ? "always" : "never"}
+      gl={{ powerPreference: "high-performance", antialias: false, alpha: false }}
       dpr={[1, 1.5]}
       camera={{ position: [0, 0, 5.2], fov: 42 }}
     >
@@ -176,5 +181,6 @@ export default function SkillCore({ accent }: { accent: "cyan" | "purple" | "blu
         </Parallax>
       </Suspense>
     </Canvas>
+    </div>
   );
 }

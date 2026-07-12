@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "motion/react";
 import { SKILL_CATEGORIES } from "@/lib/data";
@@ -30,6 +30,29 @@ const ACCENT_GLOW = {
 export default function Skills() {
   const [active, setActive] = useState(0);
   const category = SKILL_CATEGORIES[active];
+
+  // Don't create the second WebGL context (and its Three.js chunk work) at
+  // page load — the Skills section is far below the fold. Mount the canvas
+  // only once it nears the viewport. Visually identical: it appears as you
+  // scroll to it, and the 200px rootMargin means it's ready before visible.
+  const coreWrapRef = useRef<HTMLDivElement>(null);
+  const [coreMounted, setCoreMounted] = useState(false);
+  useEffect(() => {
+    const el = coreWrapRef.current;
+    if (!el) return;
+    if (coreMounted) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setCoreMounted(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [coreMounted]);
 
   return (
     <section id="skills" className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36">
@@ -93,8 +116,8 @@ export default function Skills() {
           transition={{ duration: 0.9, ease: easeExpo }}
           className="group relative aspect-square overflow-hidden rounded-3xl border border-hairline bg-bg-elevated/40 lg:aspect-auto"
         >
-          <div className="absolute inset-0">
-            <SkillCore accent={category.accent} />
+          <div ref={coreWrapRef} className="absolute inset-0">
+            {coreMounted && <SkillCore accent={category.accent} />}
           </div>
 
           {/* Soft vignette */}

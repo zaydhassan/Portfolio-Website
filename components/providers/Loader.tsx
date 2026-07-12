@@ -1,27 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function Loader() {
-  const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(false);
+
+  // Drive the progress bar + percentage text via direct DOM writes instead
+  // of per-frame `setProgress`. The old version re-rendered React ~96 times
+  // during the load window — exactly when Lighthouse measures Total Blocking
+  // Time. Visually identical, far cheaper on the main thread.
+  const barRef = useRef<HTMLDivElement>(null);
+  const pctRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const start = performance.now();
-    const duration = 1600;
+    const duration = 1200;
 
     let raf = 0;
     const tick = (now: number) => {
       const elapsed = now - start;
       const t = Math.min(elapsed / duration, 1);
-      
       const eased = 1 - Math.pow(1 - t, 3);
-      setProgress(Math.round(eased * 100));
+      const pct = Math.round(eased * 100);
+
+      if (barRef.current) barRef.current.style.width = `${pct}%`;
+      if (pctRef.current) pctRef.current.textContent = `${pct}%`;
+
       if (t < 1) {
         raf = requestAnimationFrame(tick);
       } else {
-        window.setTimeout(() => setDone(true), 280);
+        window.setTimeout(() => setDone(true), 260);
       }
     };
     raf = requestAnimationFrame(tick);
@@ -34,7 +43,7 @@ export default function Loader() {
         <motion.div
           className="fixed inset-0 z-10000 flex flex-col items-center justify-center bg-bg"
           exit={{ opacity: 0, filter: "blur(8px)" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
           <div
             aria-hidden
@@ -52,14 +61,14 @@ export default function Loader() {
 
             <div className="flex w-55 flex-col gap-3">
               <div className="h-px w-full overflow-hidden bg-hairline">
-                <motion.div
-                  className="h-full bg-linear-to-r from-accent-cyan via-accent-blue to-accent-violet"
-                  style={{ width: `${progress}%` }}
+                <div
+                  ref={barRef}
+                  className="h-full w-0 bg-linear-to-r from-accent-cyan via-accent-blue to-accent-violet"
                 />
               </div>
               <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-fg-subtle">
                 <span>Loading</span>
-                <span className="tabular-nums text-fg-muted">{progress}%</span>
+                <span ref={pctRef} className="tabular-nums text-fg-muted">0%</span>
               </div>
             </div>
           </div>

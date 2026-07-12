@@ -23,7 +23,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const SOCIALS: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/zaydhassan", icon: "github" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/zaydhassan", icon: "linkedin" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/zayd-hassan-a06105213", icon: "linkedin" },
   { label: "Email", href: `mailto:${SITE.email}`, icon: "mail" },
   { label: "Resume", href: "/resume.pdf", icon: "resume" },
 ];

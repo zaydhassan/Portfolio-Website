@@ -46,7 +46,7 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 sm:px-10">
         <motion.div
-          variants={stagger(0.08, 0.2)}
+          variants={stagger(0.08, 0.1)}
           initial="hidden"
           animate="show"
           className="flex flex-col gap-7"
