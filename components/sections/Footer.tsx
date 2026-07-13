@@ -17,9 +17,9 @@ export default function Footer() {
           initial="hidden"
           whileInView="show"
           viewport={viewportReveal}
-          className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between"
+          className="grid grid-cols-2 gap-x-6 gap-y-12 lg:flex lg:flex-row lg:items-start lg:justify-between"
         >
-          <motion.div variants={fadeUp} className="max-w-md">
+          <motion.div variants={fadeUp} className="col-span-2 max-w-md lg:col-span-1">
             <a
               href="#home"
               data-cursor="link"

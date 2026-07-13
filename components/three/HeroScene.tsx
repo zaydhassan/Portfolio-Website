@@ -249,8 +249,8 @@ export default function HeroScene() {
 
   // Scene background tracks the active theme so the canvas matches the
   // surrounding `bg-bg` section and the top/bottom fade gradients. Matches
-  // the --bg token (dark: #050505, light: #fafafa) to avoid a visible seam.
-  const bg = theme === "light" ? "#fafafa" : "#050505";
+  // the --bg token (dark: #050505, light: #f6f7f9) to avoid a visible seam.
+  const bg = theme === "light" ? "#f6f7f9" : "#050505";
 
   return (
     <div ref={ref} className="absolute inset-0">

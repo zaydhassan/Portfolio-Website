@@ -73,49 +73,64 @@
 }
 
 [data-theme="light"] {
-  --bg: #fafafa;
+  /* base surfaces — cool off-white so white cards lift off the page */
+  --bg: #f6f7f9;
   --bg-elevated: #ffffff;
   --bg-card: #ffffff;
 
+  /* text */
   --fg: #0a0a0a;
-  --fg-muted: #525252;
-  --fg-subtle: #737373;
+  --fg-muted: #52525b;
+  --fg-subtle: #71717a;
 
-  --border: rgba(0, 0, 0, 0.1);
-  --border-strong: rgba(0, 0, 0, 0.16);
-  --surface-1: rgba(0, 0, 0, 0.025);
-  --surface-2: rgba(0, 0, 0, 0.04);
-  --surface-3: rgba(0, 0, 0, 0.06);
-  --hairline: rgba(0, 0, 0, 0.1);
-  --hairline-strong: rgba(0, 0, 0, 0.16);
-  --overlay: rgba(0, 0, 0, 0.06);
-  --grid-line: rgba(0, 0, 0, 0.045);
+  /* deeper accents for solid contrast on a light ground */
+  --accent-blue: #2563eb;
+  --accent-electric: #2f6bff;
+  --accent-purple: #7c3aed;
+  --accent-violet: #9333ea;
+  --accent-cyan: #0e9bb8;
+  --accent-white: #f8fafc;
+
+  /* borders + semantic surfaces (slate-tinted, not flat black) */
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.16);
+  --surface-1: rgba(15, 23, 42, 0.025);
+  --surface-2: rgba(15, 23, 42, 0.045);
+  --surface-3: rgba(15, 23, 42, 0.07);
+  --hairline: rgba(15, 23, 42, 0.1);
+  --hairline-strong: rgba(15, 23, 42, 0.16);
+  --overlay: rgba(15, 23, 42, 0.06);
+  --grid-line: rgba(15, 23, 42, 0.05);
 
   --inverted-bg: #0a0a0a;
 
-  --glow-blue: rgba(59, 130, 246, 0.3);
-  --glow-purple: rgba(139, 92, 246, 0.3);
-  --glow-cyan: rgba(34, 211, 238, 0.28);
+  /* glows — saturated enough to register on white */
+  --glow-blue: rgba(37, 99, 235, 0.24);
+  --glow-purple: rgba(124, 58, 237, 0.24);
+  --glow-cyan: rgba(14, 155, 184, 0.24);
 
-  --aurora-purple: rgba(139, 92, 246, 0.1);
-  --aurora-cyan: rgba(34, 211, 238, 0.08);
-  --aurora-blue: rgba(47, 107, 255, 0.1);
+  /* aurora — stronger so the signature wash reads on a light ground */
+  --aurora-purple: rgba(124, 58, 237, 0.16);
+  --aurora-cyan: rgba(14, 155, 184, 0.13);
+  --aurora-blue: rgba(37, 99, 235, 0.15);
 
-  --vignette: rgba(0, 0, 0, 0.05);
+  /* gentle edge focus */
+  --vignette: rgba(15, 23, 42, 0.07);
 
+  /* frosted white glass — tinted cool so it lifts off the bg */
   --glass-bg: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.5) 100%
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.55) 100%
   );
   --glass-strong-bg: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.82) 0%,
-    rgba(246, 246, 248, 0.72) 100%
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(244, 245, 250, 0.82) 100%
   );
-  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-border: rgba(15, 23, 42, 0.12);
 
-  --ring: rgba(139, 92, 246, 0.45);
+  --ring: rgba(124, 58, 237, 0.5);
 
   color-scheme: light;
 }
@@ -411,23 +426,67 @@ body {
 /* ============================================================
    Buttons — light-mode chrome
    Ghost/outline pills use faint translucent surfaces that read as
-   near-invisible on a light background. Give them solid, clearly
-   delineated chrome in light mode. Dark-mode glass look is preserved.
+   near-invisible on a light background (white-on-off-white, thin
+   borders). Give every variant a crisp border + an elevation shadow
+   so the CTA row lifts off the light ground and stays legible over
+   the colored hero orbs. Dark-mode glass look is preserved.
    ============================================================ */
+
+/* Primary — solid dark pill; the default white hover-glow is invisible on
+   light, so swap to a dark slate glow for a visible lift. */
+[data-theme="light"] [data-variant="primary"] {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1), 0 8px 24px -12px rgba(15, 23, 42, 0.28);
+}
+[data-theme="light"] [data-variant="primary"]:hover {
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.14), 0 14px 40px -10px rgba(15, 23, 42, 0.4);
+}
+
+/* Ghost — solid white pill with a crisp border + soft shadow so it lifts
+   off the off-white ground instead of blending into it. */
 [data-theme="light"] [data-variant="ghost"] {
   background-color: #ffffff;
-  border-color: rgba(0, 0, 0, 0.12);
+  border-color: rgba(15, 23, 42, 0.18);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px -14px rgba(15, 23, 42, 0.22);
 }
 [data-theme="light"] [data-variant="ghost"]:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.28);
 }
+
+/* Outline — strong border + a faint fill + lift so the bare pill doesn't
+   dissolve over the hero orbs or the off-white ground. */
 [data-theme="light"] [data-variant="outline"] {
-  border-color: rgba(0, 0, 0, 0.22);
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(15, 23, 42, 0.3);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 20px -14px rgba(15, 23, 42, 0.18);
 }
 [data-theme="light"] [data-variant="outline"]:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.4);
+}
+
+/* ============================================================
+   Light-mode elevation — glass surfaces get a soft shadow so they
+   lift off the off-white ground instead of blending into it.
+   Dark mode keeps its glow-only look.
+   ============================================================ */
+[data-theme="light"] .glass {
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 28px -16px rgba(15, 23, 42, 0.12);
+}
+[data-theme="light"] .glass-strong {
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.06),
+    0 12px 40px -18px rgba(15, 23, 42, 0.18);
+}
+/* Slightly stronger grid presence on a light ground */
+[data-theme="light"] .grid-bg {
+  opacity: 0.85;
 }
 
 /* ============================================================
