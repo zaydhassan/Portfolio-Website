@@ -60,7 +60,7 @@ export default function TiltCard({
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
-            // eslint-disable-next-line react-hooks/rules-of-hooks
+           
             background: useTransform(
               [glareX, glareY],
               ([x, y]) =>
