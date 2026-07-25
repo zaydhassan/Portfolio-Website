@@ -90,9 +90,6 @@ keyword-retrieval layer built from the same data, so visitors always get a
 useful answer (e.g. the example questions above all resolve to real answers).
 The `@google/genai` SDK is only invoked when a key is present.
 
-A visitor who wants to follow up can use the in-chat "Email me" button, which
-opens a prefilled message to `zaydthirteen@gmail.com`.
-
 ## Features
 
 - Custom cursor with magnetic hover, glow, and contextual morphing
