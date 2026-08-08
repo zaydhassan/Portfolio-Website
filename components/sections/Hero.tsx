@@ -2,12 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { ArrowDown, FolderGit2, Download, Send } from "lucide-react";
+import { ArrowDown, FolderGit2, Send } from "lucide-react";
 import { HERO_HEADLINE, HERO_ROLES, HERO_SUMMARY } from "@/lib/data";
 import { wordReveal, stagger, easeExpo } from "@/lib/animations/variants";
 import MagneticButton from "@/components/ui/MagneticButton";
 import RoleCycle from "@/components/ui/RoleCycle";
-import { SITE } from "@/lib/constants";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
   ssr: false,
@@ -51,18 +50,6 @@ export default function Hero() {
           animate="show"
           className="flex flex-col gap-7"
         >
-          {/* Eyebrow */}
-          <motion.div
-            variants={wordReveal}
-            className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] text-fg-subtle"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-cyan opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-cyan" />
-            </span>
-            Available for new work · 2026
-          </motion.div>
-
           {/* Headline */}
           <motion.h1
             style={{ x: headlineX, y: headlineY }}
@@ -104,10 +91,6 @@ export default function Hero() {
             <MagneticButton href="#work" variant="primary">
               <FolderGit2 className="h-4 w-4" />
               View Projects
-            </MagneticButton>
-            <MagneticButton href={SITE.resume} variant="ghost">
-              <Download className="h-4 w-4" />
-              Download Resume
             </MagneticButton>
             <MagneticButton href="#contact" variant="outline">
               <Send className="h-4 w-4" />

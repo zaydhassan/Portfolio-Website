@@ -5,6 +5,10 @@ import type {
   Service,
   SkillCategory,
   Stat,
+  AchievementCard,
+  PhilosophyPrinciple,
+  CurrentStatus,
+  CurrentFocusItem,
 } from "@/types";
 import aiSqlAssistantImage from "@/public/projects/ai-sql-assistant.png";
 import aiAutomationEngineImage from "@/public/projects/ai-automation-engine.png";
@@ -37,10 +41,33 @@ export const ABOUT = {
   mission:
     "To make intelligent software feel inevitable — beautiful, fast, and quietly powerful.",
   stats: [
-    { label: "Years Learning", value: 4, suffix: "+" },
-    { label: "Projects Shipped", value: 20, suffix: "+" },
-    { label: "GitHub Contributions", value: 900, suffix: "+" },
-    { label: "Technologies", value: 30, suffix: "+" },
+    {
+      label: "Years Learning",
+      value: 4,
+      suffix: "+",
+      accent: "purple",
+      tooltip: "Self-taught across AI, full-stack & cloud.",
+    },
+    {
+      label: "Core Domains",
+      value: 6,
+      accent: "cyan",
+      tooltip: "AI, full-stack, automation, cloud, UI & backend.",
+    },
+    {
+      label: "GitHub Contributions",
+      value: 500,
+      suffix: "+",
+      accent: "blue",
+      tooltip: "Active across OSS & personal repos.",
+    },
+    {
+      label: "Technologies",
+      value: 30,
+      suffix: "+",
+      accent: "purple",
+      tooltip: "From LLMs to Postgres to Three.js.",
+    },
   ] as Stat[],
 };
 
@@ -200,90 +227,194 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+export const SHOWCASE_PROJECTS: Project[] = [
+  {
+    slug: "agentflow-ai",
+    image: aiAutomationEngineImage,
+    title: "AgentFlowAI",
+    tagline: "Agentic workflows that plan, execute, and self-heal.",
+    description:
+      "A flagship AI automation platform that orchestrates autonomous agents — chaining LLMs, tool calls, and triggers into resilient workflows that turn repetitive business processes into self-running pipelines with live observability.",
+    tags: ["LangGraph", "Python", "FastAPI", "Redis", "OpenAI", "WebSockets"],
+    github: "https://github.com/zaydhassan/automation-engine",
+    demo: "https://agentflow.ai",
+    accent: "cyan",
+    year: "2025",
+    status: "live",
+    category: "AI Automation · Flagship",
+    highlights: [
+      "Visual graph editor for multi-agent orchestration",
+      "Self-healing pipelines with retry, fallback, and human-in-the-loop",
+      "Live run telemetry, traces, and per-step replay",
+    ],
+    metrics: [
+      { label: "Workflows", value: "12+" },
+      { label: "Uptime", value: "99.9%" },
+      { label: "Manual load", value: "−80%" },
+    ],
+  },
+  {
+    slug: "novanest-ai",
+    image: aiSqlAssistantImage,
+    title: "NovaNest-AI",
+    tagline: "A premium AI platform with a polished, futuristic product surface.",
+    description:
+      "An intelligent AI product suite pairing a refined, motion-rich interface with real intelligence — natural-language tools, schema-aware assistants, and subscription-billed AI features wired into a single, cohesive experience.",
+    tags: ["Next.js", "FastAPI", "Stripe", "PostgreSQL", "LLMs"],
+    github: "https://github.com/zaydhassan/sql-assistant",
+    demo: "https://sql-assistant-c410.onrender.com",
+    accent: "purple",
+    year: "2025",
+    status: "shipped",
+    category: "AI Platform · SaaS",
+    highlights: [
+      "Natural-language tools with schema-aware context",
+      "JWT auth and Stripe subscription billing, end-to-end",
+      "Real-time editor with explain-plan insights and saved sessions",
+    ],
+    metrics: [
+      { label: "Query speed", value: "−40%" },
+      { label: "Billing", value: "Stripe" },
+      { label: "Auth", value: "JWT" },
+    ],
+  },
+  {
+    slug: "neural-ops-studio",
+    image: futureSaasSuiteImage,
+    title: "Neural Ops Studio",
+    tagline: "A next-generation AI operations & orchestration console.",
+    description:
+      "A future-ready AI SaaS for operating autonomous systems at scale — a clean, command-center console that unifies agent fleets, runbooks, and live telemetry into one orchestration surface built for the next decade of work.",
+    tags: ["Next.js", "FastAPI", "Kubernetes", "TimeseriesDB", "AI SaaS"],
+    github: "https://github.com/zaydhassan/neural-ops-studio",
+    accent: "blue",
+    year: "2026",
+    comingSoon: true,
+    status: "build",
+    category: "AI Operations · SaaS",
+    highlights: [
+      "Command-center console for agent fleet orchestration",
+      "Runbooks, alerts, and live telemetry in one surface",
+      "Designed for autonomous ops at production scale",
+    ],
+    metrics: [
+      { label: "Status", value: "In Build" },
+      { label: "Launch", value: "2026" },
+    ],
+  },
+];
+
 /* ============================================================
    Experience & Education
    ============================================================ */
 export const EXPERIENCES: Experience[] = [
   {
-  
-    role: "Software Developer Intern",
-    company: "[Company name] · Remote",
-    period: "[dates TBD]",
+    role: "Advanced Associate Software Engineer",
+    company: "Accenture",
+    logo: "/logos/accenture.svg",
+    employmentType: "Full-Time",
+    period: "May 2026 — Present",
+    location: "Chennai, Tamil Nadu, India",
+    current: true,
     description:
-      "Built high-performance web applications and shipped production-ready components across Agile sprints, with automated cloud deployment and monitoring.",
+      "Full-stack and AI engineering for enterprise software at scale — shipping cloud-native features and modern development practices across global delivery teams.",
     highlights: [
-      "Created high-performance web applications, achieving 95%+ Lighthouse performance scores",
-      "Delivered production-ready components across Agile sprints, accelerating feature releases by 20%",
-      "Automated deployments and monitoring using AWS (Lambda, S3, CloudWatch) and CI/CD via GitHub Actions, increasing reliability",
+      "Engineering full-stack features across enterprise platforms with cloud-native, AI-augmented workflows",
+      "Applying modern development practices — CI/CD, code review, and test discipline — across distributed delivery",
+      "Contributing to AI and automation workstreams that weave LLM capabilities into enterprise software",
+      "Shipping production-grade features with performance, security, and observability as first-class concerns",
     ],
-    stack: ["AWS", "Lambda", "S3", "CloudWatch", "GitHub Actions"],
+    stack: ["Full Stack", "AI Engineering", "Cloud", "Enterprise Software", "Agentic AI", "Multi-agent Systems"],
     accent: "purple",
   },
   {
-    role: "Software Development Intern",
-    company: "Bluestock Fintech · Remote",
-    period: "July 2024 — September 2024",
+    role: "Freelance Web Developer",
+    company: "Independent / Freelance",
+    logo: "/logos/freelance.svg",
+    employmentType: "Freelance",
+    period: "Sep 2025 — Dec 2025",
+    location: "Remote",
     description:
-      "Developed an IPO-focused web app with Django, deploying RESTful APIs for real-time investor updates and CI/CD-driven releases.",
+      "Delivered a production-ready business website end-to-end — from responsive design and SEO to performance tuning and client handoff.",
     highlights: [
-      "Developed an IPO-focused web app using Django and deployed RESTful APIs for real-time investor updates",
-      "Set up CI/CD pipelines via GitHub Actions, reducing deployment errors by 30%",
+      "Built and delivered a production-ready WordPress business website for an Australian migration consultancy, improving online presence and lead credibility for international users.",
+      "Optimized on-page SEO and Core Web Vitals, lifting search visibility and load performance",
+      "Engineered the site for scalability and maintainability so the client could extend content without dev support",
+      "Owned client collaboration end-to-end — scoping, iteration, and final handoff",
     ],
-    stack: ["Django", "REST", "GitHub Actions", "Python"],
+    stack: ["WordPress", "SEO", "Responsive Design", "Performance", "Client Collaboration"],
     accent: "cyan",
   },
   {
-    role: "Frontend Development Intern",
-    company: "Afame Technologies · Remote",
-    period: "May 2024 — July 2024",
+    role: "Software Developer",
+    company: "Polysia Tech",
+    logo: "/logos/polysia.jpg",
+    employmentType: "Full-Time",
+    period: "Sep 2024 — Mar 2025",
+    location: "Noida, India",
     description:
-      "Streamlined a Python-based QA framework and modular UI components to cut manual testing effort.",
+      "Built React + Python features for a production web app — owning UI development, MongoDB data flows, and performance tuning across Agile sprints.",
     highlights: [
-      "Streamlined a Python-based QA framework and modular UI components, cutting manual testing time by 25%",
+      "Developed responsive web applications using React, Python, and MongoDB, achieving 95%+ Lighthouse performance scores.",
+      "Partnered with UI/UX designers & product managers in Agile sprints to deliver production-ready components ahead of deadlines.",
+      "Resolved 30+ cross-browser compatibility issues, boosting mobile compatibility from 75% to 98%.",
+      "Conducted code reviews ensuring maintainability, scalability, and best practices.",
     ],
-    stack: ["Python", "QA Automation", "TypeScript"],
+    stack: ["React", "Python", "MongoDB", "REST APIs", "Agile"],
     accent: "blue",
   },
   {
-    role: "Full-Stack Engineer",
-    company: "Freelance / Independent",
-    period: "2024 — Present",
+    role: "Software Developer Intern",
+    company: "Bluestock",
+    logo: "/logos/bluestock.jpg",
+    employmentType: "Internship",
+    period: "Jul 2024 — Sep 2024",
+    location: "Pune, India",
     description:
-      "Shipping end-to-end AI-powered SaaS products for clients — from auth and billing to natural-language features and deployment.",
+      "Contributed to a fintech web app across Python, Java, and React — fixing bugs, automating workflows, and shipping Tailwind-styled UI.",
     highlights: [
-      "Built an AI SQL Assistant SaaS with JWT auth and Stripe subscriptions",
-      "Designed REST APIs with FastAPI backed by PostgreSQL, cutting query latency 40%",
-      "Owned delivery from schema design to CI/CD to production deploy",
+      "Developed an IPO-focused web app using Django and deployed RESTful APIs for real-time investor updates.",
+      "Set up CI/CD pipelines via GitHub Actions, reducing deployment errors by 30%.",
+      "Performed root cause analysis and implemented lasting fixes for production issues.",
+      "Improved UI consistency with Tailwind CSS and responsive component work",
     ],
-    stack: ["Next.js", "FastAPI", "PostgreSQL", "Stripe", "Docker"],
-    accent: "purple",
-  },
-  {
-    role: "AI Automation Builder",
-    company: "Personal Projects",
-    period: "2024 — Present",
-    description:
-      "Designing autonomous workflows that combine LLMs, tool calls, and triggers into resilient pipelines.",
-    highlights: [
-      "Chained LLMs with tool-use into self-healing automation pipelines",
-      "Integrated n8n, webhooks, and queues for event-driven execution",
-      "Reduced manual workload on repetitive business processes by ~80%",
-    ],
-    stack: ["Python", "LangChain", "n8n", "Redis", "OpenAI"],
+    stack: ["Python", "Java", "React", "Tailwind CSS", "REST APIs", "Automation"],
     accent: "cyan",
   },
   {
-    role: "Backend Developer",
-    company: "Personal Projects",
-    period: "2023 — 2024",
+    role: "Software Developer Intern",
+    company: "Afame Technologies",
+    logo: "/logos/afame.jpg",
+    employmentType: "Internship",
+    period: "May 2024 — Jul 2024",
+    location: "Bengaluru, India",
     description:
-      "Built and deployed a portfolio of full-stack applications focused on developer tooling and structured-data interfaces.",
+      "Built modular React components and Python automation — fixing bugs and accelerating delivery with reusable, well-structured code.",
     highlights: [
-      "Developed natural-language interfaces over structured data",
-      "Implemented CI/CD pipelines with automated testing",
-      "Owned end-to-end delivery from schema design to deployment",
+      "Engineered a modular automation framework with Python & Java, cutting manual QA time by 25%.",
+      "Developed reusable UI components in React & Tailwind CSS, reducing duplicate code by 25%.",
+      "Logged and resolved over 20+ critical bugs, ensuring seamless production without delays.",
+      "Collaborated with the team on testing, review, and handoff",
     ],
-    stack: ["Python", "TypeScript", "PostgreSQL", "Redis"],
+    stack: ["Python", "React", "Automation", "REST APIs", "Git"],
+    accent: "purple",
+  },
+  {
+    role: "Frontend Developer Intern",
+    company: "Origin Tech",
+    logo: "/logos/origin.jpg",
+    employmentType: "Internship",
+    period: "Mar 2023 — May 2023",
+    location: "Mumbai, India",
+    description:
+      "Built responsive React UIs in an Agile team — iterating on components, debugging with Chrome DevTools, and shipping clean frontend work.",
+    highlights: [
+      "Developed responsive React components and UI features within an Agile workflow",
+      "Used Chrome DevTools to profile, debug, and optimize front-end performance",
+      "Collaborated on UI development with designers and backend integration",
+      "Shipped clean, accessible, cross-browser frontend work",
+    ],
+    stack: ["React", "JavaScript", "Tailwind CSS", "Chrome DevTools", "Agile"],
     accent: "blue",
   },
 ];
@@ -317,6 +448,12 @@ export const CERTIFICATES: EducationItem[] = [
     period: "2023",
     description: "Core cloud infrastructure, deployment, and DevOps.",
   },
+  {
+    title: "Reinvention with Agentic AI",
+    org: "Accenture",
+    period: "2025",
+    description: "Designing, building, and orchestrating autonomous AI agent systems.",
+  },
 ];
 
 export const ACHIEVEMENTS: string[] = [
@@ -324,6 +461,134 @@ export const ACHIEVEMENTS: string[] = [
   "Cut production query latency by 40% through schema + pooling work",
   "Automated 12+ business workflows end-to-end",
   "Self-taught across AI, full-stack, and cloud — 4+ years deep",
+];
+
+/* ============================================================
+   About — narrative flow (Think → Architect → Build → Ship → Scale)
+   ============================================================ */
+export const STORY_STEPS = [
+  {
+    n: "01",
+    title: "Think",
+    line: "Frame the real problem before touching code.",
+  },
+  {
+    n: "02",
+    title: "Architect",
+    line: "Design resilient systems, not just features.",
+  },
+  {
+    n: "03",
+    title: "Build",
+    line: "Ship type-safe, tested, performant code.",
+  },
+  {
+    n: "04",
+    title: "Ship",
+    line: "Deploy with CI/CD, monitoring, and observability.",
+  },
+  {
+    n: "05",
+    title: "Scale",
+    line: "Harden, optimize, and grow with confidence.",
+  },
+] as const;
+
+/* ============================================================
+   About — interactive achievement cards
+   ============================================================ */
+export const ACHIEVEMENT_CARDS: AchievementCard[] = [
+  {
+    title: "Production AI SaaS with paying users",
+    challenge:
+      "Non-technical users needed natural-language access to SQL without learning syntax or risking bad queries.",
+    solution:
+      "Built a schema-aware LLM app with JWT auth, Stripe subscription billing, and a real-time explain-plan editor.",
+    technologies: ["Next.js", "FastAPI", "PostgreSQL", "Stripe", "LLMs"],
+    outcome: "Real users, paid subscriptions, and a smooth live editor.",
+    accent: "purple",
+    projectSlug: "ai-sql-assistant",
+  },
+  {
+    title: "Cut query latency by 40%",
+    challenge:
+      "Slow queries degraded the real-time editor UX under load.",
+    solution:
+      "Added schema caching, connection pooling, and explain-plan insights to surface bottlenecks.",
+    technologies: ["PostgreSQL", "FastAPI", "Redis"],
+    outcome: "−40% latency; the editor stayed fluid under concurrent use.",
+    accent: "cyan",
+    projectSlug: "ai-sql-assistant",
+  },
+  {
+    title: "Automated 12+ business workflows",
+    challenge:
+      "Repetitive manual processes drained team time and invited human error.",
+    solution:
+      "Chained LLMs with tool-use into self-healing, event-driven pipelines via webhooks, n8n, and queues.",
+    technologies: ["Python", "LangChain", "n8n", "Redis", "OpenAI"],
+    outcome: "~80% reduction in manual workload across processes.",
+    accent: "cyan",
+    projectSlug: "ai-automation-engine",
+  },
+  {
+    title: "4+ years self-taught across the stack",
+    challenge:
+      "No formal AI program — needed real depth, fast, across a wide surface area.",
+    solution:
+      "Structured self-study across AI engineering, full-stack delivery, and cloud infrastructure.",
+    technologies: ["AI", "Full-Stack", "Cloud"],
+    outcome: "Shipping production AI products end-to-end, independently.",
+    accent: "purple",
+  },
+];
+
+/* ============================================================
+   About — engineering philosophy
+   ============================================================ */
+export const PHILOSOPHY: PhilosophyPrinciple[] = [
+  {
+    title: "Solve real problems",
+    description: "Build products that matter, not demos.",
+  },
+  {
+    title: "Automation over repetition",
+    description: "If it's done twice, it should run itself.",
+  },
+  {
+    title: "Performance over complexity",
+    description: "Fast and simple beats clever and slow.",
+  },
+  {
+    title: "AI should augment people",
+    description: "Intelligence should empower, not replace.",
+  },
+  {
+    title: "Elegant UX is engineering",
+    description: "How it feels is part of how it works.",
+  },
+];
+
+/* ============================================================
+   About — currently building (rotating live status)
+   ============================================================ */
+export const CURRENTLY_BUILDING: CurrentStatus[] = [
+  { emoji: "🚀", label: "AI Automation Platform" },
+  { emoji: "📍", label: "Available for Freelance" },
+];
+
+/* ============================================================
+   About — current focus (active focus-area chips)
+   ============================================================ */
+export const CURRENT_FOCUS: CurrentFocusItem[] = [
+  { label: "Agentic AI", accent: "cyan" },
+  { label: "LLM Engineering", accent: "violet" },
+  { label: "Automation Systems", accent: "blue" },
+  { label: "Next.js", accent: "purple" },
+  { label: "FastAPI", accent: "cyan" },
+  { label: "Cloud Architecture", accent: "violet" },
+  { label: "AI SaaS", accent: "blue" },
+  { label: "Developer Experience", accent: "purple" },
 ];
 
 /* ============================================================
@@ -372,11 +637,4 @@ export const SERVICES: Service[] = [
     icon: "server",
     features: ["REST / GraphQL", "Validation", "Rate limiting", "Docs"],
   },
-];
-
-export const STATS: Stat[] = [
-  { label: "Projects Shipped", value: 20, suffix: "+" },
-  { label: "GitHub Contributions", value: 940, suffix: "+" },
-  { label: "Technologies", value: 30, suffix: "+" },
-  { label: "Years Learning", value: 4, suffix: "+" },
 ];

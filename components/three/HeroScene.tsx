@@ -186,7 +186,10 @@ function GlassOrb({
   return (
     <Float speed={speed} rotationIntensity={0.5} floatIntensity={1.1}>
       <mesh position={position} scale={scale}>
-        <icosahedronGeometry args={[1, 6]} />
+        {/* Detail 4 (5120 tris) is visually identical to 6 for a distorted
+            blob, but 16× cheaper — MeshDistortMaterial runs its noise per
+            vertex every frame, so triangle count is the dominant cost. */}
+        <icosahedronGeometry args={[1, 4]} />
         <MeshDistortMaterial
           color={color}
           emissive={color}

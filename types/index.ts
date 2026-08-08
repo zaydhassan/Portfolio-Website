@@ -43,8 +43,17 @@ export type Project = {
 export type Experience = {
   role: string;
   company: string;
+  /** Path (served from /public) to the company logo — lazy-loaded, animated on scroll. */
+  logo: string;
+  /** Employment type label — "Full-Time" | "Internship" | "Freelance" … */
+  employmentType: string;
   period: string;
+  location: string;
+  /** Whether this role is ongoing — drives the live "Present" indicator. */
+  current?: boolean;
+  /** Short impact summary shown on the collapsed card. */
   description: string;
+  /** Key Contributions — revealed inside the expandable section. */
   highlights: string[];
   stack: string[];
   accent: "blue" | "purple" | "cyan";
@@ -69,6 +78,42 @@ export type Stat = {
   value: number;
   suffix?: string;
   prefix?: string;
+  /** Optional accent for interactive stat tiles. */
+  accent?: "blue" | "purple" | "cyan";
+  /** Optional one-line tooltip revealed on hover. */
+  tooltip?: string;
+  /** Optional slug of a linked project (resolves against PROJECTS). */
+  projectSlug?: string;
+};
+
+/** A rich, expandable achievement card (replaces the plain bullet list). */
+export type AchievementCard = {
+  title: string;
+  challenge: string;
+  solution: string;
+  technologies: string[];
+  outcome: string;
+  accent: "blue" | "purple" | "cyan";
+  /** Optional slug of a related project. */
+  projectSlug?: string;
+};
+
+/** A single engineering-philosophy principle. */
+export type PhilosophyPrinciple = {
+  title: string;
+  description: string;
+};
+
+/** A rotating "currently building" status line. */
+export type CurrentStatus = {
+  emoji: string;
+  label: string;
+};
+
+/** A focus-area chip for the "Current focus" block. */
+export type CurrentFocusItem = {
+  label: string;
+  accent: "blue" | "purple" | "cyan" | "violet";
 };
 
 export type SocialLink = {

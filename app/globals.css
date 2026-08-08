@@ -267,15 +267,15 @@ body {
    ============================================================ */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
   border: 1px solid var(--glass-border);
 }
 
 .glass-strong {
   background: var(--glass-strong-bg);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
   border: 1px solid var(--glass-border);
 }
 
@@ -365,6 +365,47 @@ body {
   10% { opacity: 1; }
   90% { opacity: 1; }
   100% { transform: translateY(2000%); opacity: 0; }
+}
+
+/* Aurora light-bloom — the sweep that covers the viewport when a mobile
+   nav item is tapped, then fades to reveal the target section. */
+@keyframes aurora-bloom {
+  0% { transform: scale(0.4); opacity: 0; }
+  35% { opacity: 0.95; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+/* Animated gradient sweep for the "Let's Build Together" CTA card. */
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Rotating conic ring — the animated border on the mobile social buttons. */
+@keyframes conic-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Diagonal light sweep across the CTA "Start Conversation" button. */
+@keyframes light-sweep {
+  0% { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(220%) skewX(-12deg); }
+}
+
+/* Slow drift for the backdrop's animated gradient noise. */
+@keyframes bg-drift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Hide scrollbars on the horizontal Quick Actions chip row. */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 .animate-float-slow { animation: float-slow 14s ease-in-out infinite; }

@@ -4,7 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SITE, NAV_ITEMS } from "@/lib/constants";
 import SmoothScroll from "@/components/providers/SmoothScroll";
-import Cursor from "@/components/providers/Cursor";
+// Custom cursor disabled (was causing lag) — re-enable to restore the custom cursor.
+// import Cursor from "@/components/providers/Cursor";
 import Loader from "@/components/providers/Loader";
 import Navbar from "@/components/providers/Navbar";
 import Background from "@/components/ui/Background";
@@ -131,6 +132,13 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}})();`,
           }}
         />
+        {/* Silence three.js r183+ Clock deprecation warning (fired by R3F's internal
+            state.clock on Canvas mount) until R3F migrates to THREE.Timer. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var w=console.warn;console.warn=function(){try{var m=Array.prototype.join.call(arguments,' ');if(m&&m.indexOf('Clock: This module has been deprecated')!==-1)return;}catch(e){}return w.apply(console,arguments);};}catch(e){}})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -144,7 +152,7 @@ export default function RootLayout({
         <SmoothScroll>
           <ThemeProvider>
             <Loader />
-            <Cursor />
+            {/* <Cursor /> */}
             <Background />
             <Navbar items={NAV_ITEMS} />
             {children}

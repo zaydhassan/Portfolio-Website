@@ -25,6 +25,9 @@ export default function SmoothScroll({
       touchMultiplier: 1.6,
     });
     lenisRef.current = lenis;
+    // Expose the instance so the AIMenu bloom-transition can drive a
+    // precisely-timed programmatic scroll (independent of anchor clicks).
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
 
     let rafId = 0;
     const raf = (time: number) => {
@@ -52,6 +55,7 @@ export default function SmoothScroll({
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
       lenisRef.current = null;
+      delete (window as unknown as { lenis?: Lenis }).lenis;
     };
   }, []);
 

@@ -1,16 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { Menu } from "lucide-react";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
+import { MOBILE_NAV_ITEMS } from "@/lib/constants";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import AIMenu from "@/components/mobile/AIMenu";
 
 export default function Navbar({ items }: { items: NavItem[] }) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>("#home");
   const [open, setOpen] = useState(false);
+  // Stable identity so AIMenu's focus-effect doesn't re-run on every
+  // Navbar re-render (the IntersectionObserver setActive fires often).
+  const closeMenu = useCallback(() => setOpen(false), []);
 
   const { scrollY } = useScroll();
 
@@ -127,63 +132,13 @@ export default function Navbar({ items }: { items: NavItem[] }) {
         </nav>
       </motion.header>
 
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="fixed inset-0 z-[300] md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div
-              className="absolute inset-0 bg-bg/80 backdrop-blur-xl"
-              onClick={() => setOpen(false)}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 34 }}
-              className="absolute right-0 top-0 flex h-full w-[78%] max-w-xs flex-col gap-2 border-l border-hairline bg-bg-elevated p-6"
-            >
-              <div className="mb-6 flex items-center justify-between">
-                <span className="font-display text-lg text-fg">Menu</span>
-                <div className="flex items-center gap-2">
-                  <ThemeToggle />
-                  <button
-                    aria-label="Close menu"
-                    onClick={() => setOpen(false)}
-                    className="grid h-9 w-9 place-items-center rounded-full border border-hairline text-fg"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-              {items.map((item, i) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  initial={{ opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.06 * i + 0.1 }}
-                  className="border-b border-hairline py-4 font-display text-2xl font-medium text-fg"
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-              <a
-                href="#contact"
-                onClick={() => setOpen(false)}
-                className="mt-6 rounded-full bg-invert py-3 text-center text-sm font-medium text-bg"
-              >
-                Let&apos;s talk
-              </a>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile AI menu — a futuristic "AI OS" panel, not a drawer */}
+      <AIMenu
+        open={open}
+        onClose={closeMenu}
+        items={MOBILE_NAV_ITEMS}
+        active={active}
+      />
     </>
   );
 }

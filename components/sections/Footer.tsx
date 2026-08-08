@@ -62,20 +62,29 @@ export default function Footer() {
               Connect
             </h3>
             <ul className="flex flex-col gap-2">
-              {SOCIALS.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target={s.href.startsWith("http") ? "_blank" : undefined}
-                    rel="noreferrer"
-                    data-cursor="link"
-                    className="flex items-center gap-2 text-sm text-fg-muted transition-colors hover:text-fg"
-                  >
-                    <Icon name={s.icon} className="h-3.5 w-3.5" />
-                    {s.label}
-                  </a>
-                </li>
-              ))}
+              {SOCIALS.map((s) =>
+                s.label === "Resume" ? (
+                  <li key={s.label}>
+                    <span className="flex items-center gap-2 text-sm text-fg-subtle">
+                      <Icon name={s.icon} className="h-3.5 w-3.5" />
+                      {s.label}
+                    </span>
+                  </li>
+                ) : (
+                  <li key={s.label}>
+                    <a
+                      href={s.href}
+                      target={s.href.startsWith("http") ? "_blank" : undefined}
+                      rel="noreferrer"
+                      data-cursor="link"
+                      className="flex items-center gap-2 text-sm text-fg-muted transition-colors hover:text-fg"
+                    >
+                      <Icon name={s.icon} className="h-3.5 w-3.5" />
+                      {s.label}
+                    </a>
+                  </li>
+                )
+              )}
             </ul>
           </motion.div>
         </motion.div>

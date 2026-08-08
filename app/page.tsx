@@ -4,7 +4,6 @@ import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
 import Services from "@/components/sections/Services";
-import Stats from "@/components/sections/Stats";
 import Assistant from "@/components/sections/Assistant";
 import Footer from "@/components/sections/Footer";
 import Marquee from "@/components/ui/Marquee";
@@ -44,7 +43,6 @@ export default function Home() {
       <Experience />
       <Divider />
       <Services />
-      <Stats />
       <Assistant />
       <Footer />
     </main>

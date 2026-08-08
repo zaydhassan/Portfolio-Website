@@ -14,6 +14,13 @@ import {
   Linkedin,
   Mail,
   FileText,
+  Home,
+  Rocket,
+  Zap,
+  BookOpen,
+  Briefcase,
+  Bot,
+  Send,
   type LucideIcon,
 } from "lucide-react";
 
@@ -31,6 +38,13 @@ const MAP: Record<string, LucideIcon> = {
   linkedin: Linkedin,
   mail: Mail,
   resume: FileText,
+  home: Home,
+  rocket: Rocket,
+  zap: Zap,
+  journey: BookOpen,
+  services: Briefcase,
+  assistant: Bot,
+  send: Send,
 };
 
 export default function Icon({
