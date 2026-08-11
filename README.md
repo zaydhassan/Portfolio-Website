@@ -1,4 +1,4 @@
-# Zayd Hassan — Personal Portfolio
+# Personal Portfolio
 
 A cinematic, AI-engineer portfolio built with Next.js 16, React Three Fiber, Framer Motion, and Lenis. Dark, premium, motion-rich, and production-ready.
 
