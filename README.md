@@ -4,7 +4,7 @@ A cinematic, AI-engineer portfolio built with Next.js 16, React Three Fiber, Fra
 
 ## Stack
 
-- **Next.js 16** (App Router, Turbopack)
+- **Next.js 16** 
 - **TypeScript** (strict)
 - **Tailwind CSS v4** (CSS-first design tokens)
 - **Framer Motion** (`motion`) for animation
