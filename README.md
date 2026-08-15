@@ -56,7 +56,7 @@ The `@google/genai` SDK is only invoked when a key is present.
 
 ## Features
 
-- Custom cursor with magnetic hover, glow, and contextual morphing
+- Custom cursor with magnetic hover, glow, and contextual morphing.
 - Floating glass navbar with auto-hide, active-section indicator, and mobile drawer
 - Animated loading screen
 - Lenis smooth scrolling with anchor handling
