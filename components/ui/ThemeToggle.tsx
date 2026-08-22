@@ -20,7 +20,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
       data-cursor="link"
       data-cursor-label="Theme"
       className={cn(
-        "relative grid h-9 w-9 place-items-center overflow-hidden rounded-full border border-hairline text-fg-muted transition-colors duration-300 hover:bg-surface-2 hover:text-fg",
+        "relative grid h-11 w-11 place-items-center overflow-hidden rounded-full border border-hairline text-fg-muted transition-colors duration-300 hover:bg-surface-2 hover:text-fg",
         className,
       )}
     >

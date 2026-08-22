@@ -88,7 +88,7 @@ function AchievementItem({
                 <DetailRow label="Challenge" value={a.challenge} />
                 <DetailRow label="Solution" value={a.solution} />
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-fg-subtle">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-fg-subtle">
                     Technologies
                   </p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -136,7 +136,7 @@ function DetailRow({
 }) {
   return (
     <div>
-      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-fg-subtle">
+      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-fg-subtle">
         {label}
       </p>
       <p

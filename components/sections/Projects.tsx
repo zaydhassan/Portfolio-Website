@@ -118,13 +118,12 @@ export default function Projects() {
     <section
       ref={sectionRef}
       id="work"
-      className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36"
+      className="relative mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-28 lg:py-36"
     >
-      {/* Ambient backdrop — soft accent lighting + faint grid */}
+      {/* Ambient backdrop — faint grid only. The large blur blobs that were
+          here were redundant with each card's own glow bloom and forced
+          expensive large-radius rasterization; removed for compositor perf. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-32 top-24 h-80 w-80 rounded-full bg-accent-cyan/10 blur-[120px]" />
-        <div className="absolute right-0 top-1/2 h-96 w-96 rounded-full bg-accent-violet/10 blur-[140px]" />
-        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-accent-blue/10 blur-[120px]" />
         <div className="absolute inset-0 grid-bg opacity-[0.12]" />
       </div>
 
@@ -542,7 +541,7 @@ function DemoCta({ href, accent }: { href: string; accent: Accent }) {
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
-      className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full px-5 py-2.5 text-sm font-medium text-bg"
+      className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full px-5 py-3 text-sm font-medium text-bg"
       style={{
         background: `linear-gradient(110deg, ${ACCENT_VAR[accent]}, #ffffff)`,
         boxShadow: `0 8px 40px -10px ${ACCENT_VAR[accent]}`,
@@ -570,7 +569,7 @@ function SourceCta({ href }: { href: string }) {
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
-      className="inline-flex items-center gap-2 rounded-full border border-hairline-strong bg-surface-1/60 px-5 py-2.5 text-sm font-medium text-fg backdrop-blur-sm transition-colors duration-300 hover:bg-overlay"
+      className="inline-flex items-center gap-2 rounded-full border border-hairline-strong bg-surface-1/60 px-5 py-3 text-sm font-medium text-fg backdrop-blur-sm transition-colors duration-300 hover:bg-overlay"
     >
       <Github className="h-4 w-4" />
       Source Code

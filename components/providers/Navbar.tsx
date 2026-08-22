@@ -43,9 +43,22 @@ export default function Navbar({ items }: { items: NavItem[] }) {
   }, [items]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    // Lock the page + pause Lenis while the mobile menu is open so its
+    // internal nav list scrolls natively instead of fighting the smooth
+    // scroller. Resume when it closes.
+    const lenis = (window as unknown as {
+      lenis?: { stop: () => void; start: () => void };
+    }).lenis;
+    if (open) {
+      lenis?.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      lenis?.start();
+    }
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
     };
   }, [open]);
 
@@ -61,7 +74,7 @@ export default function Navbar({ items }: { items: NavItem[] }) {
           className={cn(
             "flex items-center gap-1 rounded-full px-2 py-2 transition-all duration-500",
             scrolled
-              ? "glass-strong shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6)]"
+              ? "border border-hairline bg-bg/80 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6)]"
               : "border border-transparent bg-transparent",
           )}
         >
@@ -125,7 +138,7 @@ export default function Navbar({ items }: { items: NavItem[] }) {
           <button
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-            className="grid h-9 w-9 place-items-center rounded-full text-fg md:hidden"
+            className="grid h-11 w-11 place-items-center rounded-full text-fg md:hidden"
           >
             <Menu className="h-5 w-5" />
           </button>

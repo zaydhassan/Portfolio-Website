@@ -11,7 +11,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36"
+      className="relative mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-28 lg:py-36"
     >
       <SectionHeading
         eyebrow="Services"

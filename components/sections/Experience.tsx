@@ -109,7 +109,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36"
+      className="relative mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-28 lg:py-36"
     >
       <SectionHeading
         eyebrow="Experience"
@@ -184,7 +184,7 @@ export default function Experience() {
           initial="hidden"
           whileInView="show"
           viewport={viewportReveal}
-          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
+          className="grid grid-cols-1 gap-4 md:grid-cols-3"
         >
           {CERTIFICATES.map((c) => (
             <motion.div
@@ -446,7 +446,7 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
 
 function PresentBadge() {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
       <span className="relative flex h-1.5 w-1.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />

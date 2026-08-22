@@ -10,7 +10,7 @@ import { useRenderActive } from "@/components/three/useRenderActive";
 /* ----------------------------------------------------------------
    Particle field — drifting additive points
    ---------------------------------------------------------------- */
-function ParticleField({ count = 1400 }: { count?: number }) {
+function ParticleField({ count = 600 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
 
   const positions = useMemo(() => {
@@ -58,7 +58,7 @@ function ParticleField({ count = 1400 }: { count?: number }) {
 /* ----------------------------------------------------------------
    Neural network — nodes + connections with a traveling pulse
    ---------------------------------------------------------------- */
-function NeuralNetwork({ nodeCount = 26 }: { nodeCount?: number }) {
+function NeuralNetwork({ nodeCount = 18 }: { nodeCount?: number }) {
   const groupRef = useRef<THREE.Group>(null);
   const lineMatRef = useRef<THREE.LineBasicMaterial>(null);
   const nodeMatRef = useRef<THREE.PointsMaterial>(null);
@@ -186,10 +186,11 @@ function GlassOrb({
   return (
     <Float speed={speed} rotationIntensity={0.5} floatIntensity={1.1}>
       <mesh position={position} scale={scale}>
-        {/* Detail 4 (5120 tris) is visually identical to 6 for a distorted
-            blob, but 16× cheaper — MeshDistortMaterial runs its noise per
-            vertex every frame, so triangle count is the dominant cost. */}
-        <icosahedronGeometry args={[1, 4]} />
+        {/* Detail 3 (1280 tris) — 4× cheaper than detail 4 and visually
+            indistinguishable for this distort amount. MeshDistortMaterial
+            runs its noise per vertex every frame, so triangle count is the
+            dominant cost. */}
+        <icosahedronGeometry args={[1, 3]} />
         <MeshDistortMaterial
           color={color}
           emissive={color}

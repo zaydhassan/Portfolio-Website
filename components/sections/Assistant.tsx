@@ -159,7 +159,7 @@ export default function Assistant() {
   return (
     <section
       id="contact"
-      className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36"
+      className="relative mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-28 lg:py-36"
     >
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10">
         {/* ── Left: heading + socials + email hand-off ─────────────── */}
@@ -234,7 +234,7 @@ export default function Assistant() {
           className="relative"
         >
           <div className="gradient-border rounded-[1.75rem]">
-            <div className="relative flex h-[36rem] flex-col overflow-hidden rounded-[1.75rem] border border-hairline glass sm:h-[34rem]">
+            <div className="relative flex h-[min(30rem,80svh)] flex-col overflow-hidden rounded-[1.75rem] border border-hairline glass sm:h-[34rem] lg:h-[36rem]">
               {/* Header */}
               <div className="flex items-center justify-between border-b border-hairline px-5 py-4">
                 <div className="flex items-center gap-3">
@@ -258,7 +258,7 @@ export default function Assistant() {
                     onClick={emailHandoff}
                     data-cursor="link"
                     aria-label="Email Zayd"
-                    className="grid h-8 w-8 place-items-center rounded-lg border border-hairline text-fg-muted transition-colors hover:bg-overlay hover:text-fg"
+                    className="grid h-10 w-10 place-items-center rounded-lg border border-hairline text-fg-muted transition-colors hover:bg-overlay hover:text-fg"
                   >
                     <Mail className="h-3.5 w-3.5" />
                   </button>
@@ -267,7 +267,7 @@ export default function Assistant() {
                     data-cursor="link"
                     aria-label="Reset conversation"
                     disabled={messages.length === 0}
-                    className="grid h-8 w-8 place-items-center rounded-lg border border-hairline text-fg-muted transition-colors hover:bg-overlay hover:text-fg disabled:opacity-30 disabled:hover:bg-transparent"
+                    className="grid h-10 w-10 place-items-center rounded-lg border border-hairline text-fg-muted transition-colors hover:bg-overlay hover:text-fg disabled:opacity-30 disabled:hover:bg-transparent"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
                   </button>
@@ -277,6 +277,7 @@ export default function Assistant() {
               {/* Messages */}
               <div
                 ref={scrollRef}
+                data-lenis-prevent
                 className="flex-1 space-y-4 overflow-y-auto px-5 py-5"
                 role="log"
                 aria-live="polite"
@@ -302,7 +303,7 @@ export default function Assistant() {
                             key={s}
                             onClick={() => send(s)}
                             data-cursor="link"
-                            className="group flex items-center gap-2 rounded-full border border-hairline bg-surface-2 px-3.5 py-1.5 text-xs text-fg-muted transition-colors hover:border-hairline-strong hover:bg-surface-3 hover:text-fg"
+                            className="group flex items-center gap-2 rounded-full border border-hairline bg-surface-2 px-4 py-3 text-xs text-fg-muted transition-colors hover:border-hairline-strong hover:bg-surface-3 hover:text-fg"
                           >
                             <Sparkles className="h-3 w-3 text-accent-violet" />
                             {s}
@@ -321,7 +322,7 @@ export default function Assistant() {
                         transition={{ duration: 0.35, ease: easeExpo }}
                         className="flex justify-end"
                       >
-                        <div className="max-w-[85%] rounded-2xl rounded-br-md bg-overlay px-4 py-2.5 text-sm leading-relaxed text-fg">
+                        <div className="max-w-[85%] break-words rounded-2xl rounded-br-md bg-overlay px-4 py-2.5 text-sm leading-relaxed text-fg">
                           {m.content}
                         </div>
                       </motion.div>
@@ -333,11 +334,11 @@ export default function Assistant() {
                         transition={{ duration: 0.35, ease: easeExpo }}
                         className="flex justify-start"
                       >
-                        <div className="flex max-w-[90%] gap-2.5">
+                        <div className="flex min-w-0 max-w-[90%] gap-2.5">
                           <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-hairline bg-bg/60 text-[11px] font-semibold text-fg">
                             Z
                           </div>
-                          <div className="rounded-2xl rounded-tl-md border border-hairline bg-surface-2 px-4 py-2.5 text-sm leading-relaxed text-fg">
+                          <div className="min-w-0 break-words rounded-2xl rounded-tl-md border border-hairline bg-surface-2 px-4 py-2.5 text-sm leading-relaxed text-fg">
                             {m.streaming && m.content.length === 0 ? (
                               <TypingDots />
                             ) : (
@@ -381,7 +382,7 @@ export default function Assistant() {
                     data-cursor="link"
                     aria-label="Send message"
                     className={cn(
-                      "grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-all duration-300",
+                      "grid h-11 w-11 shrink-0 place-items-center rounded-xl transition-all duration-300",
                       busy || input.trim().length === 0
                         ? "bg-surface-1 text-fg-subtle"
                         : "bg-invert text-bg hover:shadow-[0_6px_30px_-8px_rgba(255,255,255,0.4)]",

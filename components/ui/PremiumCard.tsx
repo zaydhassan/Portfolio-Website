@@ -150,7 +150,7 @@ export default function PremiumCard({
       {!reduce && (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-active:opacity-100"
           style={{
             backgroundImage:
               "linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%)",
@@ -164,7 +164,7 @@ export default function PremiumCard({
       {glare && (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100"
           style={{ background: glareBg }}
         />
       )}

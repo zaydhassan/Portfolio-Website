@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion } from "motion/react";
 import { MapPin } from "lucide-react";
 import { ABOUT } from "@/lib/data";
@@ -14,26 +13,27 @@ import CurrentStatus from "@/components/about/CurrentStatus";
 import StatGrid from "@/components/about/StatGrid";
 import CurrentFocus from "@/components/about/CurrentFocus";
 import PhilosophyCard from "@/components/about/PhilosophyCard";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
-/* Living AI Core — lazy-loaded (ssr:false) so the heavy three.js chunk
-   is split out of the main bundle. A static gradient "Z" is shown while
-   it loads so there is zero layout shift. */
-const AboutCore = dynamic(() => import("@/components/three/AboutCore"), {
-  ssr: false,
-  loading: () => (
+/* Living AI Core — desktop-only (>=768px), loaded in an isolated /about-core
+   route via <iframe> so three.js is never in the main page's chunk graph
+   (mobile never fetches it). The gradient "Z" fills the slot on phones. */
+function CoreFallback() {
+  return (
     <div className="absolute inset-0 flex items-center justify-center">
       <span className="font-display text-[8rem] font-semibold leading-none gradient-text">
         Z
       </span>
     </div>
-  ),
-});
+  );
+}
 
 export default function About() {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <section
       id="about"
-      className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36"
+      className="relative mx-auto w-full max-w-7xl px-6 py-20 sm:px-10 sm:py-28 lg:py-36"
     >
       <AboutBackground />
 
@@ -59,7 +59,7 @@ export default function About() {
 
       <StoryFlow />
 
-      <div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-12 lg:gap-16">
         {/* Profile — living AI Core */}
         <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={viewportReveal}>
           <TiltCard className="group gradient-border rounded-3xl" intensity={6}>
@@ -69,7 +69,17 @@ export default function About() {
                 <div className="absolute inset-0 animate-spin-slow conic-ring opacity-40 blur-xl" />
                 <div className="absolute inset-2 rounded-[1.1rem] bg-gradient-to-b from-bg-elevated to-bg" />
                 <div className="absolute inset-4 overflow-hidden rounded-[1rem] border border-white/10 bg-[#0b0b10]">
-                  <AboutCore />
+                  {isDesktop ? (
+                    <iframe
+                      src="/about-core"
+                      title="About AI core scene"
+                      aria-hidden="true"
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full border-0 bg-[#0b0b10]"
+                    />
+                  ) : (
+                    <CoreFallback />
+                  )}
                 </div>
                 {/* Floating badges */}
                 <motion.div

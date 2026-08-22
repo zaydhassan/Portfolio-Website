@@ -337,7 +337,7 @@ function CoreScene({ compact, mobile }: { compact: boolean; mobile: boolean }) {
         {/* Core */}
         <group ref={coreGroupRef}>
           <mesh ref={meshRef} scale={1}>
-            <icosahedronGeometry args={[0.58, 4]} />
+            <icosahedronGeometry args={[0.58, 3]} />
             <MeshDistortMaterial
               ref={matRef as never}
               color="#4c1d95"

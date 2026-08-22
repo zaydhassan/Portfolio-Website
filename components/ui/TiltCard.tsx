@@ -26,6 +26,14 @@ export default function TiltCard({
   const glareX = useSpring(gx, { stiffness: 150, damping: 20 });
   const glareY = useSpring(gy, { stiffness: 150, damping: 20 });
 
+  // Computed unconditionally (top-level) so hook order stays stable; the
+  // glare layer below only renders when `glare` is true.
+  const glareBg = useTransform(
+    [glareX, glareY],
+    ([x, y]) =>
+      `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.18), transparent 45%)`,
+  );
+
   const handleMove = (e: React.MouseEvent) => {
     const el = ref.current;
     if (!el) return;
@@ -50,6 +58,7 @@ export default function TiltCard({
       ref={ref}
       onMouseMove={handleMove}
       onMouseLeave={reset}
+      whileTap={{ scale: 0.985 }}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
       data-cursor="card"
       className={cn("relative", className)}
@@ -58,15 +67,8 @@ export default function TiltCard({
       {glare && (
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          style={{
-           
-            background: useTransform(
-              [glareX, glareY],
-              ([x, y]) =>
-                `radial-gradient(circle at ${x}% ${y}%, rgba(255,255,255,0.18), transparent 45%)`,
-            ),
-          }}
+          className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-active:opacity-100"
+          style={{ background: glareBg }}
         />
       )}
     </motion.div>

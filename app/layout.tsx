@@ -1,26 +1,27 @@
-
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SITE, NAV_ITEMS } from "@/lib/constants";
-import SmoothScroll from "@/components/providers/SmoothScroll";
-// Custom cursor disabled (was causing lag) — re-enable to restore the custom cursor.
-// import Cursor from "@/components/providers/Cursor";
-import Loader from "@/components/providers/Loader";
-import Navbar from "@/components/providers/Navbar";
-import Background from "@/components/ui/Background";
+import { SITE } from "@/lib/constants";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 
+// `display: "optional"` (not "swap") is deliberate for LCP. With "swap", the
+// Geist web font downloads in the background and re-paints the headline (the
+// page's LCP element) when ready — but on throttled mobile that swap is
+// delayed until the main thread frees up from JS execution (~3.4s), so LCP
+// landed at the swap time instead of FCP. "optional" uses the web font only
+// if it's already loaded within the first ~100ms (no late swap); otherwise
+// it keeps the fallback for that load. Either way the largest contentful
+// paint is recorded at first paint, not after a delayed font swap.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 export const metadata: Metadata = {
@@ -114,6 +115,11 @@ const jsonLd = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // Minimal root layout: fonts, globals, theme bootstrap, and the theme
+  // provider only. The heavy chrome (SmoothScroll, Loader, Background,
+  // Navbar) lives in (site)/layout.tsx so the lightweight (scenes) routes —
+  // loaded inside <iframe>s — don't pull any of it (or three.js) into the
+  // main page's chunk graph.
   return (
     <html
       lang="en"
@@ -143,21 +149,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <a
-          href="#main"
-          className="sr-only z-400 rounded-full bg-invert px-4 py-2 text-sm font-medium text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
-        >
-          Skip to content
-        </a>
-        <SmoothScroll>
-          <ThemeProvider>
-            <Loader />
-            {/* <Cursor /> */}
-            <Background />
-            <Navbar items={NAV_ITEMS} />
-            {children}
-          </ThemeProvider>
-        </SmoothScroll>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

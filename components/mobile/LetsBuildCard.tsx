@@ -61,7 +61,7 @@ export default function LetsBuildCard({
               ? undefined
               : { scale: 0.97, transition: { type: "spring", stiffness: 400, damping: 18 } }
           }
-          className="group relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-sm font-semibold text-[#080a14]"
+          className="group relative mt-3 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3 text-sm font-semibold text-[#080a14]"
         >
           {/* Animated gradient field */}
           <span

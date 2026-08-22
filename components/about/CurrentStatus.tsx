@@ -32,7 +32,7 @@ export default function CurrentStatus() {
         <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60 animate-ping" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
       </span>
-      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-fg-subtle">
+      <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-fg-subtle">
         Now
       </span>
       <AnimatePresence mode="wait">

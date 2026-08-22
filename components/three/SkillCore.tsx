@@ -23,9 +23,9 @@ function CoreOrb({ color }: { color: string }) {
   });
   return (
     <mesh ref={ref}>
-      {/* Detail 4 (5120 tris) vs 6 (82k tris) — 16× cheaper, visually
+      {/* Detail 3 (1280 tris) — 4× cheaper than detail 4, visually
           identical for this distort amount. */}
-      <icosahedronGeometry args={[1.1, 4]} />
+      <icosahedronGeometry args={[1.1, 3]} />
       <MeshDistortMaterial
         color={color}
         emissive={color}

@@ -210,7 +210,7 @@ export default function NavTile({
         <span className="flex items-center font-display text-base font-medium tracking-tight text-fg">
           {item.label}
           {item.assistant && (
-            <span className="ml-2 align-middle text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-cyan">
+            <span className="ml-2 align-middle text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-cyan">
               AI
             </span>
           )}

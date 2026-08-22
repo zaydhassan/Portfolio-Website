@@ -110,7 +110,7 @@ export default function Footer() {
             href="#home"
             data-cursor="link"
             data-cursor-label="Top"
-            className="inline-flex items-center gap-2 rounded-full border border-hairline px-4 py-2 text-xs text-fg-muted transition-colors hover:text-fg"
+            className="inline-flex items-center gap-2 rounded-full border border-hairline px-4 py-3 text-xs text-fg-muted transition-colors hover:text-fg"
           >
             Back to top
             <ArrowUp className="h-3.5 w-3.5" />

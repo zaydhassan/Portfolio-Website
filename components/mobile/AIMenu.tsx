@@ -206,7 +206,7 @@ export default function AIMenu({
                       ref={closeBtnRef}
                       aria-label="Close menu"
                       onClick={onClose}
-                      className="grid h-9 w-9 place-items-center rounded-full border border-hairline text-fg transition-colors hover:bg-surface-2"
+                      className="grid h-11 w-11 place-items-center rounded-full border border-hairline text-fg transition-colors hover:bg-surface-2"
                     >
                       <X className="h-5 w-5" />
                     </button>
@@ -216,7 +216,7 @@ export default function AIMenu({
                 {/* AI Hero — compact, side-by-side: AI Core + greeting */}
                 <motion.div
                   {...reveal(0.15)}
-                  className="relative z-20 mt-3 flex h-24 items-center gap-3 overflow-hidden rounded-2xl border border-hairline bg-bg/40 sm:h-28"
+                  className="relative z-20 mt-3 flex min-h-24 items-center gap-3 overflow-hidden rounded-2xl border border-hairline bg-bg/40 sm:min-h-28"
                 >
                   <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
                     <AICore open={open} />

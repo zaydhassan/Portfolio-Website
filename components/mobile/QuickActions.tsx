@@ -83,7 +83,7 @@ function QuickChip({
           : { scale: 0.95, transition: { type: "spring", stiffness: 400, damping: 18 } }
       }
       className={cn(
-        "group relative flex shrink-0 items-center gap-2 overflow-hidden rounded-full border border-hairline-strong bg-surface-1/70 px-3.5 py-2 text-xs font-medium text-fg backdrop-blur-md backdrop-saturate-150 transition-colors duration-300",
+        "group relative flex shrink-0 items-center gap-2 overflow-hidden rounded-full border border-hairline-strong bg-surface-1/70 px-3.5 py-2.5 text-xs font-medium text-fg backdrop-blur-md backdrop-saturate-150 transition-colors duration-300",
         a.glow,
       )}
     >

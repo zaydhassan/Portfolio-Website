@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "motion/react";
 import { SKILL_CATEGORIES } from "@/lib/data";
 import { fadeUp, stagger, viewportReveal, easeExpo } from "@/lib/animations/variants";
@@ -9,11 +8,8 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import RadialProgress from "@/components/ui/RadialProgress";
 import Icon from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
-
-const SkillCore = dynamic(() => import("@/components/three/SkillCore"), {
-  ssr: false,
-  loading: () => null,
-});
+import { useMediaQuery } from "@/hooks/use-media-query";
+import MobileSkillCore from "@/components/mobile/MobileSkillCore";
 
 const ACCENT_TEXT = {
   cyan: "text-accent-cyan",
@@ -30,29 +26,22 @@ const ACCENT_GLOW = {
 export default function Skills() {
   const [active, setActive] = useState(0);
   const category = SKILL_CATEGORIES[active];
+  // Desktop-only (>=768px): the WebGL skill core runs in an isolated
+  // /skill-core route inside an <iframe>, so three.js is never in the main
+  // page's chunk graph and mobile never fetches it. The bento skill rings
+  // on the right are the real content on phones.
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // Don't create the second WebGL context (and its Three.js chunk work) at
-  // page load — the Skills section is far below the fold. Mount the canvas
-  // only once it nears the viewport. Visually identical: it appears as you
-  // scroll to it, and the 200px rootMargin means it's ready before visible.
-  const coreWrapRef = useRef<HTMLDivElement>(null);
-  const [coreMounted, setCoreMounted] = useState(false);
+  // When the active category changes, tell the iframe scene to recolor
+  // without reloading it (no WebGL re-init). The initial accent is passed
+  // via the iframe's ?accent= query so the first paint is already correct.
   useEffect(() => {
-    const el = coreWrapRef.current;
-    if (!el) return;
-    if (coreMounted) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setCoreMounted(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "200px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [coreMounted]);
+    if (!isDesktop) return;
+    const win = iframeRef.current?.contentWindow;
+    if (!win) return;
+    win.postMessage({ accent: category.accent }, window.location.origin);
+  }, [active, isDesktop, category.accent]);
 
   return (
     <section id="skills" className="relative mx-auto w-full max-w-7xl px-6 py-28 sm:px-10 sm:py-36">
@@ -83,7 +72,7 @@ export default function Skills() {
               onClick={() => setActive(i)}
               data-cursor="link"
               className={cn(
-                "relative rounded-full px-4 py-2 text-sm transition-colors duration-300",
+                "relative rounded-full px-4 py-3 text-sm transition-colors duration-300",
                 isActive ? "text-fg" : "text-fg-muted hover:text-fg",
               )}
             >
@@ -107,17 +96,31 @@ export default function Skills() {
       </motion.div>
 
       {/* Showcase grid */}
-      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+      <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-[0.85fr_1.15fr]">
         {/* 3D skill core */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={viewportReveal}
           transition={{ duration: 0.9, ease: easeExpo }}
-          className="group relative aspect-square overflow-hidden rounded-3xl border border-hairline bg-bg-elevated/40 lg:aspect-auto"
+          className="group relative aspect-square overflow-hidden rounded-3xl border border-hairline bg-bg-elevated/40 md:aspect-auto"
         >
-          <div ref={coreWrapRef} className="absolute inset-0">
-            {coreMounted && <SkillCore accent={category.accent} />}
+          <div className="absolute inset-0">
+            {isDesktop ? (
+              <iframe
+                ref={iframeRef}
+                src="/skill-core"
+                title="Skill core 3D scene"
+                aria-hidden="true"
+                loading="lazy"
+                className="absolute inset-0 h-full w-full border-0 bg-[#07070b]"
+              />
+            ) : (
+              /* CSS-only core — keeps the "core + orbiting planets" visual
+                 on mobile without shipping three.js. Recolors live with the
+                 active category (see MobileSkillCore). */
+              <MobileSkillCore accent={category.accent} />
+            )}
           </div>
 
           {/* Soft vignette */}
@@ -165,7 +168,7 @@ export default function Skills() {
               initial="hidden"
               animate="show"
               exit={{ opacity: 0, y: -10, transition: { duration: 0.25 } }}
-              className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3"
+              className="grid grid-cols-2 gap-4 lg:grid-cols-3"
             >
               {category.skills.map((skill, i) => {
                 const featured = i === 0;
@@ -175,7 +178,7 @@ export default function Skills() {
                     variants={fadeUp}
                     className={cn(
                       "group relative flex flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-hairline bg-surface-1 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-hairline-strong",
-                      featured && "sm:col-span-2 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-7 lg:col-span-1 lg:flex-col",
+                      featured && "col-span-2 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-7 lg:col-span-1 lg:flex-col",
                     )}
                   >
                     <div

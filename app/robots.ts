@@ -7,6 +7,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        // Scene routes are only ever loaded inside <iframe>s on the main
+        // page — they're not standalone documents, so keep them out of the
+        // index.
+        disallow: ["/hero", "/about-core", "/skill-core"],
       },
     ],
     sitemap: `${SITE.url}/sitemap.xml`,

@@ -48,7 +48,7 @@ export default function StoryFlow() {
         whileInView={{ scaleY: 1 }}
         viewport={viewportReveal}
         transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-none absolute bottom-4 left-[1.9rem] top-4 w-px origin-top bg-gradient-to-b from-accent-cyan via-accent-blue to-accent-violet opacity-40 lg:hidden"
+        className="pointer-events-none absolute bottom-4 left-[1.9rem] top-4 w-px origin-top bg-gradient-to-b from-accent-cyan via-accent-blue to-accent-violet opacity-40 block sm:hidden"
       />
 
       <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
