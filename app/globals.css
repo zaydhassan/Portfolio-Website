@@ -21,6 +21,7 @@
   --accent-violet: #a855f7;
   --accent-cyan: #22d3ee;
   --accent-white: #f8fafc;
+  --accent-orange: #e8833a;
 
   /* borders + semantic surfaces (white-based for dark) */
   --border: rgba(255, 255, 255, 0.08);
@@ -41,6 +42,7 @@
   --glow-blue: rgba(59, 130, 246, 0.45);
   --glow-purple: rgba(139, 92, 246, 0.45);
   --glow-cyan: rgba(34, 211, 238, 0.4);
+  --glow-orange: rgba(232, 131, 58, 0.4);
 
   /* aurora (soft background wash) */
   --aurora-purple: rgba(139, 92, 246, 0.18);
@@ -90,6 +92,7 @@
   --accent-violet: #9333ea;
   --accent-cyan: #0e9bb8;
   --accent-white: #f8fafc;
+  --accent-orange: #c2410c;
 
   /* borders + semantic surfaces (slate-tinted, not flat black) */
   --border: rgba(15, 23, 42, 0.1);
@@ -147,6 +150,7 @@
   --color-accent-purple: var(--accent-purple);
   --color-accent-violet: var(--accent-violet);
   --color-accent-cyan: var(--accent-cyan);
+  --color-accent-orange: var(--accent-orange);
   --color-border: var(--border);
 
   /* semantic surface tokens for theme-aware utilities */

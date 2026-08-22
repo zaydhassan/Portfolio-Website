@@ -31,7 +31,7 @@ export type Project = {
   github?: string;
   demo?: string;
   comingSoon?: boolean;
-  accent: "blue" | "purple" | "cyan";
+  accent: "blue" | "purple" | "cyan" | "orange";
   year: string;
   /** Launch narrative fields — used by the cinematic showcase. */
   status?: ProjectStatus;

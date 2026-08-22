@@ -14,6 +14,9 @@ import {
   ExternalLink,
   Sparkles,
   Star,
+  PenLine,
+  FileText,
+  Clock,
 } from "lucide-react";
 import Image from "next/image";
 import { SHOWCASE_PROJECTS } from "@/lib/data";
@@ -33,18 +36,21 @@ const ACCENT_TEXT: Record<Accent, string> = {
   cyan: "text-accent-cyan",
   purple: "text-accent-violet",
   blue: "text-accent-blue",
+  orange: "text-accent-orange",
 };
 
 const ACCENT_GLOW: Record<Accent, string> = {
   cyan: "bg-accent-cyan/40",
   purple: "bg-accent-violet/40",
   blue: "bg-accent-blue/40",
+  orange: "bg-accent-orange/40",
 };
 
 const ACCENT_DOT: Record<Accent, string> = {
   cyan: "bg-accent-cyan",
   purple: "bg-accent-violet",
   blue: "bg-accent-blue",
+  orange: "bg-accent-orange",
 };
 
 /** CSS variable used for the rotating conic border sweep + CTA glow. */
@@ -52,19 +58,21 @@ const ACCENT_VAR: Record<Accent, string> = {
   cyan: "var(--accent-cyan)",
   purple: "var(--accent-violet)",
   blue: "var(--accent-blue)",
+  orange: "var(--accent-orange)",
 };
 
 const ACCENT_GRADIENT: Record<Accent, string> = {
   cyan: "from-accent-cyan/25 via-[#0b0b10] to-[#050505]",
   purple: "from-accent-violet/25 via-[#0b0b10] to-[#050505]",
   blue: "from-accent-blue/25 via-[#0b0b10] to-[#050505]",
+  orange: "from-accent-orange/25 via-[#0b0b10] to-[#050505]",
 };
 
-/** Short domain pill per project — a clean "AI / Automation / SaaS" tag. */
+/** Short domain pill per project — a clean "AI / Automation / SaaS / Web" tag. */
 const KIND_LABEL: Record<string, string> = {
   "agentflow-ai": "AI Automation",
   "novanest-ai": "AI SaaS",
-  "neural-ops-studio": "AI Operations",
+  inkwell: "Full-Stack Web App",
 };
 
 const STATUS_CFG: Record<
@@ -84,7 +92,7 @@ const STATUS_CFG: Record<
     ping: false,
   },
   build: {
-    label: "In Progress",
+    label: "Building",
     chip: "border-accent-violet/30 bg-accent-violet/10 text-accent-violet",
     dot: "bg-accent-violet",
     ping: true,
@@ -138,11 +146,11 @@ export default function Projects() {
         eyebrow="Selected Work / Product Showcase"
         title={
           <>
-            AI products, shipped like{" "}
+            Products, built like{" "}
             <span className="gradient-text">launches</span>.
           </>
         }
-        description="Three AI-native products, engineered end-to-end and treated like launches — agentic automation, an intelligent platform, and a next-generation operations console."
+        description="Three products engineered end-to-end and treated like launches — agentic AI automation, an intelligent platform, and a full-stack publishing application."
       />
 
       {/* Staggered entrance for the whole showcase */}
@@ -343,6 +351,8 @@ function ProjectCard({
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 {project.demo && !project.comingSoon ? (
                   <DemoCta href={project.demo} accent={accent} />
+                ) : status === "build" && project.github ? (
+                  <BuildCta href={project.github} accent={accent} />
                 ) : project.comingSoon ? (
                   <ComingSoonCta />
                 ) : null}
@@ -362,6 +372,378 @@ function ProjectCard({
         </div>
       </TiltCard>
     </motion.div>
+  );
+}
+
+/* ================================================================== *
+   InkwellDashboard — a cinematic product-showcase mockup rendered as the
+   visual for the Inkwell card (no real screenshot asset exists yet).
+   A design representation of the real Inkwell interface — a warm,
+   editorial publishing platform — NOT a literal screenshot and NOT an
+   AI-dashboard aesthetic. Strictly the Inkwell palette: deep warm
+   brown/near-black ground, burnt-orange accent, cream text, muted
+   blue-gray support. Deliberately distinct from the portfolio's
+   cyan/purple/electric-blue AI-project cards.
+   ================================================================== */
+
+// Warm Inkwell palette — kept local so the thumbnail owns its own
+// identity and never drifts into the portfolio's cool AI accents.
+const INK = {
+  ground: "#15100c",
+  panel: "#1c150e",
+  panelHi: "#241a12",
+  card: "#221a12",
+  border: "rgba(255,220,190,0.12)",
+  borderFaint: "rgba(255,220,190,0.08)",
+  orange: "#e8833a",
+  cream: "#f1e7d8",
+  muted: "#b9a892",
+  subtle: "#8a7a66",
+};
+
+// Film-grain noise overlay (inline SVG turbulence) — gives the warm
+// ground a soft editorial atmosphere without any grid/particle effects.
+const INK_GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
+function InkwellDashboard() {
+  const nav = ["Home", "About", "Blogs", "Leaderboard", "Contact"];
+  const articles = [
+    { tag: "Craft", title: "The shape of a good sentence", read: "6 min" },
+    { tag: "Voices", title: "Interviews with first-time authors", read: "9 min" },
+    { tag: "Guide", title: "Editing your own first draft", read: "4 min" },
+  ];
+  const leaders = [
+    { n: "1", name: "Aisha K.", pts: "4.2k" },
+    { n: "2", name: "Marco D.", pts: "3.8k" },
+    { n: "3", name: "Lena P.", pts: "3.1k" },
+  ];
+
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden"
+      style={{ backgroundColor: INK.ground }}
+    >
+      {/* Warm ambient lighting — soft orange bloom behind the browser,
+          plus a deeper brown wash bottom-left for depth. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[68%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[70px]"
+        style={{ backgroundColor: "rgba(232,131,58,0.16)" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-[-6%] left-[-4%] h-[44%] w-[44%] rounded-full blur-[60px]"
+        style={{ backgroundColor: "rgba(122,60,30,0.22)" }}
+      />
+      {/* Vignette + grain for cinematic editorial atmosphere */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 48%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-soft-light"
+        style={{ backgroundImage: INK_GRAIN, backgroundSize: "120px 120px" }}
+      />
+
+      {/* Composition — angled browser centered slightly right, with two
+          subtle secondary UI panels floating behind it for depth. */}
+      <div
+        className="absolute inset-0 flex items-center justify-center px-[5%]"
+        style={{ perspective: "1100px" }}
+      >
+        <div className="relative h-full w-full max-w-[640px]">
+          {/* Secondary panel — article preview, behind-left */}
+          <div
+            aria-hidden
+            className="absolute left-[1%] top-1/2 z-0 w-[44%] opacity-[0.62] blur-[1.25px]"
+            style={{
+              transform:
+                "translateY(-50%) rotateY(15deg) rotateZ(-5deg) translateZ(-60px)",
+            }}
+          >
+            <div
+              className="overflow-hidden rounded-lg shadow-2xl"
+              style={{
+                backgroundColor: INK.panel,
+                border: `1px solid ${INK.border}`,
+              }}
+            >
+              <div
+                className="relative h-12 w-full sm:h-16"
+                style={{
+                  background:
+                    "linear-gradient(135deg,#4a3422,#724a2c 58%,#2a1d12)",
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-30"
+                  style={{ backgroundImage: INK_GRAIN, backgroundSize: "90px 90px" }}
+                />
+                <FileText
+                  className="absolute right-1.5 top-1.5 h-3 w-3"
+                  style={{ color: INK.orange, opacity: 0.7 }}
+                />
+              </div>
+              <div className="p-2">
+                <span
+                  className="text-[6px] font-medium uppercase tracking-wider sm:text-[7px]"
+                  style={{ color: INK.orange }}
+                >
+                  Craft
+                </span>
+                <div
+                  className="mt-0.5 text-[8px] font-semibold leading-tight sm:text-[9px]"
+                  style={{ color: INK.cream }}
+                >
+                  The shape of a good sentence
+                </div>
+                <div
+                  className="mt-1 flex items-center gap-1 text-[6px] sm:text-[7px]"
+                  style={{ color: INK.subtle }}
+                >
+                  <Clock className="h-2 w-2" />
+                  6 min · Zayd H.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary panel — leaderboard, behind-right-top */}
+          <div
+            aria-hidden
+            className="absolute right-[2%] top-[7%] z-0 w-[33%] opacity-[0.5] blur-[1.25px]"
+            style={{
+              transform: "rotateY(-17deg) rotateZ(4deg) translateZ(-50px)",
+            }}
+          >
+            <div
+              className="rounded-lg p-2 shadow-2xl"
+              style={{
+                backgroundColor: INK.panel,
+                border: `1px solid ${INK.border}`,
+              }}
+            >
+              <div
+                className="mb-1.5 text-[7px] font-semibold uppercase tracking-[0.18em] sm:text-[8px]"
+                style={{ color: INK.muted }}
+              >
+                Leaderboard
+              </div>
+              {leaders.map((l) => (
+                <div key={l.n} className="flex items-center gap-1.5 py-0.5">
+                  <span
+                    className="text-[7px] font-bold sm:text-[8px]"
+                    style={{ color: INK.orange }}
+                  >
+                    {l.n}
+                  </span>
+                  <span
+                    className="h-2.5 w-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: "#5a3a22" }}
+                  />
+                  <span
+                    className="flex-1 truncate text-[6px] sm:text-[7px]"
+                    style={{ color: INK.muted }}
+                  >
+                    {l.name}
+                  </span>
+                  <span
+                    className="text-[6px] sm:text-[7px]"
+                    style={{ color: INK.subtle }}
+                  >
+                    {l.pts}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Main browser — the primary visual focus */}
+          <div
+            className="absolute left-1/2 top-1/2 z-10 w-[82%] max-w-[560px]"
+            style={{
+              transform:
+                "translate(-48%, -50%) rotateY(-9deg) rotateX(2deg)",
+            }}
+          >
+            <div
+              className="overflow-hidden rounded-xl shadow-[0_30px_90px_-25px_rgba(0,0,0,0.9)]"
+              style={{
+                backgroundColor: INK.panel,
+                border: `1px solid ${INK.border}`,
+              }}
+            >
+              {/* Browser chrome */}
+              <div
+                className="flex items-center gap-1.5 px-3 py-2"
+                style={{
+                  backgroundColor: INK.panelHi,
+                  borderBottom: `1px solid ${INK.borderFaint}`,
+                }}
+              >
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: "rgba(224,129,92,0.8)" }}
+                />
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: "rgba(201,163,106,0.7)" }}
+                />
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: "rgba(122,138,106,0.6)" }}
+                />
+                <div
+                  className="mx-2 hidden flex-1 items-center gap-1.5 rounded-md px-2 py-1 sm:flex"
+                  style={{
+                    backgroundColor: "rgba(0,0,0,0.3)",
+                    border: `1px solid ${INK.borderFaint}`,
+                  }}
+                >
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: "#7a8a6a" }}
+                  />
+                  <span
+                    className="text-[9px]"
+                    style={{ color: INK.muted }}
+                  >
+                    inkwell.app
+                  </span>
+                </div>
+              </div>
+
+              {/* Page body */}
+              <div
+                className="flex flex-col gap-3 p-3 sm:p-4 lg:p-5"
+                style={{ backgroundColor: INK.panel }}
+              >
+                {/* Navbar row */}
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <PenLine
+                      className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                      style={{ color: INK.orange }}
+                    />
+                    <span
+                      className="font-display text-[12px] font-bold tracking-tight sm:text-[13px]"
+                      style={{ color: INK.cream }}
+                    >
+                      Inkwell
+                    </span>
+                  </div>
+                  <div className="ml-2 hidden items-center gap-2.5 sm:flex lg:gap-3.5">
+                    {nav.map((item, i) => (
+                      <span
+                        key={item}
+                        className="text-[9px] lg:text-[10px]"
+                        style={{
+                          color: i === 0 ? INK.orange : INK.muted,
+                          fontWeight: i === 0 ? 600 : 400,
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="ml-auto flex items-center gap-2 sm:gap-2.5">
+                    <span
+                      className="hidden text-[9px] sm:inline lg:text-[10px]"
+                      style={{ color: INK.muted }}
+                    >
+                      Login
+                    </span>
+                    <span
+                      className="rounded-md px-2 py-1 text-[8px] font-semibold sm:px-2.5 sm:text-[9px] lg:text-[10px]"
+                      style={{ backgroundColor: INK.orange, color: "#1a1208" }}
+                    >
+                      Write
+                    </span>
+                  </div>
+                </div>
+
+                {/* Editorial hero */}
+                <div className="mt-0.5">
+                  <div
+                    className="text-[8px] font-semibold uppercase tracking-[0.22em] sm:text-[9px]"
+                    style={{ color: INK.orange }}
+                  >
+                    Featured
+                  </div>
+                  <div
+                    className="mt-1 font-display font-bold leading-[1.05] sm:text-[19px] lg:text-[26px]"
+                    style={{ color: INK.cream }}
+                  >
+                    Stories worth
+                    <br />
+                    reading.
+                  </div>
+                  <div
+                    className="mt-1.5 max-w-[82%] text-[8px] leading-snug sm:text-[9px] lg:text-[11px]"
+                    style={{ color: INK.muted }}
+                  >
+                    A modern home for writers and readers — publish, discover,
+                    and climb the leaderboard.
+                  </div>
+                </div>
+
+                {/* Article cards */}
+                <div className="mt-1 grid grid-cols-3 gap-1.5 sm:gap-2">
+                  {articles.map((a) => (
+                    <div
+                      key={a.title}
+                      className="flex flex-col gap-1 rounded-lg p-1.5 sm:p-2"
+                      style={{
+                        backgroundColor: INK.card,
+                        border: `1px solid ${INK.borderFaint}`,
+                      }}
+                    >
+                      <div
+                        className="relative h-6 overflow-hidden rounded-md sm:h-8"
+                        style={{
+                          background:
+                            "linear-gradient(135deg,#3a2a1a,#5a3a22 60%,#2a1d12)",
+                        }}
+                      >
+                        <FileText
+                          className="absolute right-1 top-1 h-2.5 w-2.5"
+                          style={{ color: INK.orange, opacity: 0.7 }}
+                        />
+                      </div>
+                      <span
+                        className="text-[6px] font-medium uppercase tracking-wider sm:text-[7px] lg:text-[8px]"
+                        style={{ color: INK.orange }}
+                      >
+                        {a.tag}
+                      </span>
+                      <div
+                        className="line-clamp-2 text-[7px] font-medium leading-tight sm:text-[8px] lg:text-[10px]"
+                        style={{ color: INK.cream }}
+                      >
+                        {a.title}
+                      </div>
+                      <div
+                        className="mt-auto flex items-center gap-0.5 text-[6px] sm:text-[7px] lg:text-[8px]"
+                        style={{ color: INK.subtle }}
+                      >
+                        <Clock className="h-2 w-2" />
+                        {a.read}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -429,18 +811,21 @@ function ProjectVisual({
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#0e0e0e]/20 via-transparent to-[#050505]/75" />
 
       {/* Fallback mark when there is no screenshot */}
-      {!hasImage && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="relative grid place-items-center">
-            <div className={cn("absolute h-32 w-32 rounded-full blur-2xl", ACCENT_GLOW[accent])} />
-            <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl border border-white/15 bg-[#050505]/60 backdrop-blur-md sm:h-28 sm:w-28">
-              <span className={cn("font-display text-4xl font-semibold sm:text-5xl", ACCENT_TEXT[accent])}>
-                {project.title.charAt(0)}
-              </span>
+      {!hasImage &&
+        (project.slug === "inkwell" ? (
+          <InkwellDashboard />
+        ) : (
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="relative grid place-items-center">
+              <div className={cn("absolute h-32 w-32 rounded-full blur-2xl", ACCENT_GLOW[accent])} />
+              <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl border border-white/15 bg-[#050505]/60 backdrop-blur-md sm:h-28 sm:w-28">
+                <span className={cn("font-display text-4xl font-semibold sm:text-5xl", ACCENT_TEXT[accent])}>
+                  {project.title.charAt(0)}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        ))}
 
       {/* Scanning light sweep */}
       <motion.div
@@ -553,6 +938,34 @@ function DemoCta({ href, accent }: { href: string; accent: Accent }) {
       />
       <ExternalLink className="relative h-4 w-4" />
       <span className="relative">Live Demo</span>
+      <ArrowUpRight className="relative h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
+    </motion.a>
+  );
+}
+
+function BuildCta({ href, accent }: { href: string; accent: Accent }) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      data-cursor="link"
+      data-cursor-label="Build"
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: "spring", stiffness: 400, damping: 22 }}
+      className="group/cta relative inline-flex items-center gap-2 overflow-hidden rounded-full px-5 py-3 text-sm font-medium text-fg"
+      style={{
+        background: `linear-gradient(110deg, ${ACCENT_VAR[accent]}, #0c0c12)`,
+        boxShadow: `0 8px 40px -10px ${ACCENT_VAR[accent]}`,
+      }}
+    >
+      <span
+        aria-hidden
+        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover/cta:translate-x-full"
+      />
+      <Sparkles className="relative h-4 w-4" />
+      <span className="relative">Explore Build</span>
       <ArrowUpRight className="relative h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
     </motion.a>
   );
