@@ -15,7 +15,7 @@ type Msg = { id: number; role: Role; content: string; streaming?: boolean };
 const SUGGESTIONS = [
   "Tell me about Zayd",
   "Why should I hire you?",
-  "Explain your AI SQL Assistant",
+  "Explain your AgentFlowAI project",
   "What technologies do you know?",
   "Show me your best project",
 ];

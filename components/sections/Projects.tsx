@@ -17,6 +17,10 @@ import {
   PenLine,
   FileText,
   Clock,
+  Activity,
+  Target,
+  Briefcase,
+  TrendingUp,
 } from "lucide-react";
 import Image from "next/image";
 import { SHOWCASE_PROJECTS } from "@/lib/data";
@@ -71,7 +75,7 @@ const ACCENT_GRADIENT: Record<Accent, string> = {
 /** Short domain pill per project — a clean "AI / Automation / SaaS / Web" tag. */
 const KIND_LABEL: Record<string, string> = {
   "agentflow-ai": "AI Automation",
-  "novanest-ai": "AI SaaS",
+  "novanest-ai": "AI SaaS · Career Tech",
   inkwell: "Full-Stack Web App",
 };
 
@@ -748,6 +752,341 @@ function InkwellDashboard() {
 }
 
 /* ================================================================== *
+   NovaNestDashboard — a cinematic product-showcase mockup of the real
+   NovaNest-AI interface (no screenshot asset is wired yet). Renders the
+   Career Command Center: a browser-framed, glassmorphic dashboard in
+   NovaNest's own deep-black / violet / magenta identity — deliberately
+   distinct from Inkwell's warm editorial palette and AgentFlowAI's
+   cyan automation look. Sits on the ProjectVisual's existing purple
+   gradient + grid backdrop for cinematic depth.
+   ================================================================== */
+function NovaNestDashboard() {
+  const nav = ["Command Center", "Resume", "Interviews", "Applications"];
+  const stats = [
+    { icon: Activity, label: "Career Health", value: "82", tone: "violet" },
+    { icon: Target, label: "Readiness", value: "74", tone: "magenta" },
+    { icon: FileText, label: "Resume Score", value: "91", tone: "blue" },
+    { icon: Briefcase, label: "Applications", value: "12", tone: "violet" },
+  ];
+  const mission = [
+    "Refine resume summary for ML roles",
+    "Practice 2 system-design questions",
+    "Follow up with Acme recruiter",
+  ];
+  const timeline = ["2023", "2024", "2025", "2026"];
+
+  // Tone → accent color for each stat tile's icon.
+  const TONE: Record<string, string> = {
+    violet: "#a855f7",
+    magenta: "#d946ef",
+    blue: "#3b82f6",
+  };
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center p-[5%]">
+      {/* Soft violet→magenta bloom behind the browser for depth */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[62%] w-[58%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[55px]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(168,85,247,0.38), rgba(217,70,239,0.14) 60%, transparent 72%)",
+        }}
+      />
+
+      {/* Browser product preview — angled, with a gentle hover lift.
+          No z-index: the shared status/year telemetry chips (rendered later
+          in the DOM by ProjectVisual) must stay painted on top of the
+          mockup, so the status chip stays visible above the image. */}
+      <div
+        className="relative w-[91%] max-w-[560px] transition-transform duration-700 group-hover:scale-[1.03]"
+        style={{ transform: "rotateY(-7deg) rotateX(2deg)" }}
+      >
+        <div
+          className="overflow-hidden rounded-xl shadow-[0_30px_90px_-25px_rgba(0,0,0,0.9)] backdrop-blur-sm"
+          style={{
+            backgroundColor: "rgba(12,10,20,0.95)",
+            border: "1px solid rgba(168,85,247,0.22)",
+          }}
+        >
+          {/* Browser chrome */}
+          <div
+            className="flex items-center gap-1.5 px-3 py-2"
+            style={{
+              backgroundColor: "#130f1e",
+              borderBottom: "1px solid rgba(168,85,247,0.14)",
+            }}
+          >
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundColor: "#a855f7" }}
+            />
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundColor: "#d946ef" }}
+            />
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundColor: "#3b82f6" }}
+            />
+            <div
+              className="mx-2 hidden flex-1 items-center gap-1.5 rounded-md px-2 py-1 sm:flex"
+              style={{
+                backgroundColor: "rgba(0,0,0,0.3)",
+                border: "1px solid rgba(168,85,247,0.12)",
+              }}
+            >
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ backgroundColor: "#3b82f6" }}
+              />
+              <span className="text-[9px]" style={{ color: "#a99fc4" }}>
+                novanest.ai
+              </span>
+            </div>
+            <span
+              className="ml-auto rounded-full px-2 py-0.5 text-[7px] font-semibold text-white sm:ml-0"
+              style={{
+                background: "linear-gradient(90deg,#a855f7,#d946ef)",
+              }}
+            >
+              AI Twin
+            </span>
+          </div>
+
+          {/* Page body — Career Command Center */}
+          <div className="flex flex-col gap-2.5 p-3 sm:p-4">
+            {/* Brand + nav row */}
+            <div className="flex items-center gap-2">
+              <div
+                className="flex h-5 w-5 items-center justify-center rounded-md"
+                style={{ background: "linear-gradient(135deg,#a855f7,#d946ef)" }}
+              >
+                <Sparkles className="h-3 w-3 text-white" />
+              </div>
+              <span
+                className="font-display text-[11px] font-bold sm:text-[12px]"
+                style={{ color: "#ede9fe" }}
+              >
+                NovaNest AI
+              </span>
+              <div className="ml-2 hidden items-center gap-2 sm:flex">
+                {nav.map((n, i) => (
+                  <span
+                    key={n}
+                    className="text-[8px]"
+                    style={{
+                      color: i === 0 ? "#c4b5fd" : "#7a6f99",
+                      fontWeight: i === 0 ? 600 : 400,
+                    }}
+                  >
+                    {n}
+                  </span>
+                ))}
+              </div>
+              <span
+                className="ml-auto rounded-md px-2 py-0.5 text-[7px] font-medium"
+                style={{
+                  backgroundColor: "#1a1430",
+                  border: "1px solid rgba(168,85,247,0.25)",
+                  color: "#c4b5fd",
+                }}
+              >
+                Copilot
+              </span>
+            </div>
+
+            {/* Stat tiles */}
+            <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
+              {stats.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <div
+                    key={s.label}
+                    className="rounded-lg p-1.5 sm:p-2"
+                    style={{
+                      backgroundColor: "#130f1e",
+                      border: "1px solid rgba(168,85,247,0.14)",
+                    }}
+                  >
+                    <Icon
+                      className="h-2.5 w-2.5 sm:h-3 sm:w-3"
+                      style={{ color: TONE[s.tone] }}
+                    />
+                    <div
+                      className="mt-1 text-[6px] uppercase tracking-wider sm:text-[7px]"
+                      style={{ color: "#7a6f99" }}
+                    >
+                      {s.label}
+                    </div>
+                    <div
+                      className="font-display text-[11px] font-bold leading-none sm:text-[13px]"
+                      style={{ color: "#ede9fe" }}
+                    >
+                      {s.value}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Two-column workspace */}
+            <div className="grid grid-cols-5 gap-2">
+              {/* Today's Mission */}
+              <div
+                className="col-span-3 rounded-lg p-2"
+                style={{
+                  backgroundColor: "#130f1e",
+                  border: "1px solid rgba(168,85,247,0.14)",
+                }}
+              >
+                <div
+                  className="flex items-center gap-1 text-[7px] font-semibold uppercase tracking-wider sm:text-[8px]"
+                  style={{ color: "#c4b5fd" }}
+                >
+                  <Target className="h-2.5 w-2.5" />
+                  Today&apos;s Mission
+                </div>
+                <div className="mt-1.5 flex flex-col gap-1">
+                  {mission.map((m, i) => (
+                    <div key={m} className="flex items-center gap-1.5">
+                      <span
+                        className="flex h-2 w-2 shrink-0 items-center justify-center rounded-[3px]"
+                        style={{
+                          border: `1px solid ${i === 0 ? "#d946ef" : "rgba(168,85,247,0.4)"}`,
+                          backgroundColor: i === 0 ? "#d946ef" : "transparent",
+                        }}
+                      >
+                        {i === 0 && (
+                          <span className="h-1 w-1 rounded-[1px] bg-white" />
+                        )}
+                      </span>
+                      <span
+                        className="text-[7px] leading-tight sm:text-[8px]"
+                        style={{
+                          color: i === 0 ? "#7a6f99" : "#ede9fe",
+                          textDecoration: i === 0 ? "line-through" : "none",
+                        }}
+                      >
+                        {m}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {/* AI Copilot suggestion */}
+                <div
+                  className="mt-2 flex items-start gap-1 rounded-md p-1.5"
+                  style={{
+                    backgroundColor: "#1a1030",
+                    border: "1px solid rgba(217,70,239,0.2)",
+                  }}
+                >
+                  <Sparkles className="mt-0.5 h-2.5 w-2.5 shrink-0 text-[#d946ef]" />
+                  <span
+                    className="text-[6px] leading-tight sm:text-[7px]"
+                    style={{ color: "#c4b5fd" }}
+                  >
+                    Copilot: your readiness rose 12% — focus on system design
+                    next.
+                  </span>
+                </div>
+              </div>
+
+              {/* AI Insight / Career Twin */}
+              <div
+                className="col-span-2 rounded-lg p-2"
+                style={{
+                  backgroundColor: "#130f1e",
+                  border: "1px solid rgba(168,85,247,0.14)",
+                }}
+              >
+                <div
+                  className="flex items-center gap-1 text-[7px] font-semibold uppercase tracking-wider sm:text-[8px]"
+                  style={{ color: "#c4b5fd" }}
+                >
+                  <Sparkles className="h-2.5 w-2.5 text-[#d946ef]" />
+                  AI Insight
+                </div>
+                <div className="mt-1.5 flex items-center gap-1.5">
+                  <div
+                    className="flex h-6 w-6 items-center justify-center rounded-full"
+                    style={{ background: "linear-gradient(135deg,#a855f7,#d946ef)" }}
+                  >
+                    <span className="text-[7px] font-bold text-white">CT</span>
+                  </div>
+                  <div className="min-w-0">
+                    <div
+                      className="text-[7px] font-semibold"
+                      style={{ color: "#ede9fe" }}
+                    >
+                      Career Twin
+                    </div>
+                    <div className="text-[6px]" style={{ color: "#7a6f99" }}>
+                      Active sync
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="mt-1.5 text-[6px] leading-tight sm:text-[7px]"
+                  style={{ color: "#a99fc4" }}
+                >
+                  3 roles match your trajectory this week.
+                </div>
+              </div>
+            </div>
+
+            {/* Career Timeline */}
+            <div
+              className="rounded-lg p-2"
+              style={{
+                backgroundColor: "#130f1e",
+                border: "1px solid rgba(168,85,247,0.14)",
+              }}
+            >
+              <div
+                className="text-[7px] font-semibold uppercase tracking-wider sm:text-[8px]"
+                style={{ color: "#c4b5fd" }}
+              >
+                Career Timeline
+              </div>
+              <div className="relative mt-2 flex items-center justify-between">
+                <div
+                  className="absolute left-1 right-1 top-1/2 h-px -translate-y-1/2"
+                  style={{
+                    background:
+                      "linear-gradient(90deg,rgba(168,85,247,0.3),rgba(217,70,239,0.5),rgba(59,130,246,0.3))",
+                  }}
+                />
+                {timeline.map((t, i) => (
+                  <div
+                    key={t}
+                    className="relative z-10 flex flex-col items-center gap-1"
+                  >
+                    <span
+                      className="h-2 w-2 rounded-full"
+                      style={{
+                        backgroundColor: i === 3 ? "#d946ef" : "#a855f7",
+                        boxShadow: i === 3 ? "0 0 8px #d946ef" : "none",
+                      }}
+                    />
+                    <span
+                      className="text-[6px] sm:text-[7px]"
+                      style={{ color: "#7a6f99" }}
+                    >
+                      {t}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================== *
    ProjectVisual — the "live preview" panel: image with hover zoom,
    layered gradients, a scanning light sweep, and floating telemetry
    chips with subtle parallax.
@@ -814,6 +1153,8 @@ function ProjectVisual({
       {!hasImage &&
         (project.slug === "inkwell" ? (
           <InkwellDashboard />
+        ) : project.slug === "novanest-ai" ? (
+          <NovaNestDashboard />
         ) : (
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <div className="relative grid place-items-center">
